@@ -20,6 +20,21 @@ html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--cream2);font-family:var(--fb);font-weight:300;line-height:1.85;font-size:1.05rem}
 ::selection{background:var(--red);color:#fff}
 
+/* Language toggle */
+.en{display:none}
+body.lang-en .en{display:inline}
+body.lang-en .cs{display:none}
+body.lang-en span.en{display:inline}
+body.lang-en div.en{display:block}
+body.lang-en p.en{display:block}
+body.lang-en li.en{display:flex}
+body.lang-en td.en,body.lang-en tr.en{display:table-row}
+
+#lang-toggle{position:fixed;top:18px;right:24px;z-index:200;display:flex;align-items:center;gap:0;border-radius:8px;overflow:hidden;border:1px solid var(--border);background:var(--bg2);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);cursor:pointer;font-size:0;box-shadow:0 4px 20px rgba(0,0,0,.3)}
+#lang-toggle button{background:transparent;border:none;padding:8px 14px;font-size:1.1rem;cursor:pointer;transition:.3s;line-height:1;color:var(--cream2)}
+#lang-toggle button.active{background:var(--red);color:#fff}
+#lang-toggle button:hover:not(.active){background:rgba(233,55,69,.15)}
+
 /* Progress bar */
 #progress{position:fixed;top:0;left:0;height:4px;background:linear-gradient(90deg,var(--red),var(--gold),var(--green),var(--blue),var(--purple));background-size:300% 100%;animation:gradShift 4s linear infinite;z-index:1000;transition:width .15s}
 @keyframes gradShift{0%{background-position:0 0}100%{background-position:300% 0}}
@@ -228,10 +243,17 @@ section{margin-left:56px}
   .brand-grid{grid-template-columns:1fr 1fr}
   .hero h1{font-size:2.6rem}
   section{padding:60px 16px;margin-left:44px}
+  #lang-toggle{top:14px;right:12px}
 }
 </style>
 </head>
 <body>
+
+<!-- Language Toggle -->
+<div id="lang-toggle">
+  <button id="btn-cs" class="active" onclick="setLang('cs')">🇨🇿</button>
+  <button id="btn-en" onclick="setLang('en')">🇬🇧</button>
+</div>
 
 <!-- Sidebar -->
 <aside class="sidebar" id="sidebar">
@@ -241,19 +263,19 @@ section{margin-left:56px}
   <div class="sidebar-score">28</div>
   <div class="sidebar-links">
     <a href="#top"><span class="sn"></span><span class="sl">GEO Score</span></a>
-    <a href="#score"><span class="sn">01</span><span class="sl">Skóre kritérií</span></a>
-    <a href="#platforms"><span class="sn">02</span><span class="sl">Platformy</span></a>
+    <a href="#score"><span class="sn">01</span><span class="sl"><span class="cs">Skóre kritérií</span><span class="en">Criteria Score</span></span></a>
+    <a href="#platforms"><span class="sn">02</span><span class="sl"><span class="cs">Platformy</span><span class="en">Platforms</span></span></a>
     <a href="#crawlers"><span class="sn">03</span><span class="sl">AI Crawlers</span></a>
     <a href="#brand"><span class="sn">04</span><span class="sl">Brand Mentions</span></a>
     <a href="#citability"><span class="sn">05</span><span class="sl">Citability</span></a>
     <a href="#schema"><span class="sn">06</span><span class="sl">Schema Markup</span></a>
-    <a href="#top5"><span class="sn">07</span><span class="sl">Top 5 změn</span></a>
-    <a href="#plan"><span class="sn">08</span><span class="sl">Akční plán</span></a>
-    <a href="#examples"><span class="sn">09</span><span class="sl">Příklady</span></a>
-    <a href="#conclusion"><span class="sn">10</span><span class="sl">Závěr</span></a>
+    <a href="#top5"><span class="sn">07</span><span class="sl"><span class="cs">Top 5 změn</span><span class="en">Top 5 Changes</span></span></a>
+    <a href="#plan"><span class="sn">08</span><span class="sl"><span class="cs">Akční plán</span><span class="en">Action Plan</span></span></a>
+    <a href="#examples"><span class="sn">09</span><span class="sl"><span class="cs">Příklady</span><span class="en">Examples</span></span></a>
+    <a href="#conclusion"><span class="sn">10</span><span class="sl"><span class="cs">Závěr</span><span class="en">Conclusion</span></span></a>
   </div>
   <div class="sidebar-back">
-    <a href="https://czechgames.vercel.app/"><span style="font-size:1rem">&larr;</span><span class="sl">Zpět na nabídku</span></a>
+    <a href="https://czechgames.vercel.app/"><span style="font-size:1rem">&larr;</span><span class="sl"><span class="cs">Zpět na nabídku</span><span class="en">Back to offer</span></span></a>
   </div>
 </aside>
 
@@ -269,7 +291,7 @@ section{margin-left:56px}
 <!-- HERO -->
 <section class="hero" id="top">
   <span class="sec-num">GEO Report /</span>
-  <h1>AI Search<br>Analýza</h1>
+  <h1><span class="cs">AI Search<br>Analýza</span><span class="en">AI Search<br>Analysis</span></h1>
   <div style="position:relative;width:220px;height:220px;margin:0 auto 32px">
     <div class="score-ring"></div>
     <div class="score-inner">
@@ -277,12 +299,12 @@ section{margin-left:56px}
       <div class="score-label">GEO Score</div>
     </div>
   </div>
-  <p class="subtitle" style="text-align:center;margin:0 auto 32px">Generative Engine Optimization analýza e-shopu shop.czechgames.com.<br>Připravenost na AI vyhledávání (Google AI Overviews, ChatGPT, Perplexity).</p>
+  <p class="subtitle" style="text-align:center;margin:0 auto 32px"><span class="cs">Generative Engine Optimization analýza e-shopu shop.czechgames.com.<br>Připravenost na AI vyhledávání (Google AI Overviews, ChatGPT, Perplexity).</span><span class="en">Generative Engine Optimization analysis of the e-shop shop.czechgames.com.<br>Readiness for AI search (Google AI Overviews, ChatGPT, Perplexity).</span></p>
   <div class="meta">
     <span><strong>Web:</strong> shop.czechgames.com</span>
-    <span><strong>Platforma:</strong> Shoptet Premium</span>
-    <span><strong>Datum:</strong> 25. 3. 2026</span>
-    <span><strong>Jazyk:</strong> EN</span>
+    <span><strong><span class="cs">Platforma:</span><span class="en">Platform:</span></strong> Shoptet Premium</span>
+    <span><strong><span class="cs">Datum:</span><span class="en">Date:</span></strong> 25. 3. 2026</span>
+    <span><strong><span class="cs">Jazyk:</span><span class="en">Language:</span></strong> EN</span>
   </div>
 </section>
 
@@ -290,7 +312,7 @@ section{margin-left:56px}
 <section id="score">
   <div class="narrow">
     <span class="sec-num reveal">01 /</span>
-    <h2 class="reveal d1">Skóre podle kritérií</h2>
+    <h2 class="reveal d1"><span class="cs">Skóre podle kritérií</span><span class="en">Score by Criteria</span></h2>
 
     <div class="stat-grid reveal d2">
       <div class="stat-card">
@@ -301,7 +323,7 @@ section{margin-left:56px}
       <div class="stat-card">
         <div class="num gold">6<span style="font-size:1.2rem">/20</span></div>
         <div class="bar-wrap"><div class="bar gold" style="width:30%"></div></div>
-        <div class="lbl">Struktura</div>
+        <div class="lbl"><span class="cs">Struktura</span><span class="en">Structure</span></div>
       </div>
       <div class="stat-card">
         <div class="num green">5<span style="font-size:1.2rem">/15</span></div>
@@ -311,7 +333,7 @@ section{margin-left:56px}
       <div class="stat-card">
         <div class="num blue">8<span style="font-size:1.2rem">/20</span></div>
         <div class="bar-wrap"><div class="bar blue" style="width:40%"></div></div>
-        <div class="lbl">Autorita</div>
+        <div class="lbl"><span class="cs">Autorita</span><span class="en">Authority</span></div>
       </div>
     </div>
 
@@ -319,7 +341,7 @@ section{margin-left:56px}
       <div class="stat-card" style="display:flex;align-items:center;justify-content:center;gap:32px">
         <div>
           <div class="num purple">5<span style="font-size:1.2rem">/20</span></div>
-          <div class="lbl">Technická dostupnost</div>
+          <div class="lbl"><span class="cs">Technická dostupnost</span><span class="en">Technical Accessibility</span></div>
         </div>
         <div class="bar-wrap" style="flex:1;max-width:400px"><div class="bar purple" style="width:25%"></div></div>
       </div>
@@ -331,27 +353,27 @@ section{margin-left:56px}
 <section id="platforms">
   <div class="narrow">
     <span class="sec-num reveal">02 /</span>
-    <h2 class="reveal d1">Skóre podle platforem</h2>
+    <h2 class="reveal d1"><span class="cs">Skóre podle platforem</span><span class="en">Score by Platform</span></h2>
     <div class="platform-grid reveal d2">
       <div class="plat-card">
         <h3>Google AI Overviews</h3>
         <div class="plat-score red">25<span style="font-size:1rem;color:var(--cream2)">/100</span></div>
-        <p class="plat-note">Slabý on-page obsah, chybí schema, thin meta descriptions</p>
+        <p class="plat-note"><span class="cs">Slabý on-page obsah, chybí schema, thin meta descriptions</span><span class="en">Weak on-page content, missing schema, thin meta descriptions</span></p>
       </div>
       <div class="plat-card">
         <h3>ChatGPT</h3>
         <div class="plat-score" style="color:var(--gold)">35<span style="font-size:1rem;color:var(--cream2)">/100</span></div>
-        <p class="plat-note">Wikipedia hry silné, ale firemní stránka je stub; shop nemá citovatelný obsah</p>
+        <p class="plat-note"><span class="cs">Wikipedia hry silné, ale firemní stránka je stub; shop nemá citovatelný obsah</span><span class="en">Wikipedia game pages are strong, but the company page is a stub; the shop has no citable content</span></p>
       </div>
       <div class="plat-card">
         <h3>Perplexity</h3>
         <div class="plat-score" style="color:var(--gold)">30<span style="font-size:1rem;color:var(--cream2)">/100</span></div>
-        <p class="plat-note">Silná přítomnost na Redditu přes herní tituly, ale shop sám o sobě necitovatelný</p>
+        <p class="plat-note"><span class="cs">Silná přítomnost na Redditu přes herní tituly, ale shop sám o sobě necitovatelný</span><span class="en">Strong Reddit presence through game titles, but the shop itself is not citable</span></p>
       </div>
       <div class="plat-card">
         <h3>Bing Copilot</h3>
         <div class="plat-score red">25<span style="font-size:1rem;color:var(--cream2)">/100</span></div>
-        <p class="plat-note">Slabé structured data, chybí Product JSON-LD</p>
+        <p class="plat-note"><span class="cs">Slabé structured data, chybí Product JSON-LD</span><span class="en">Weak structured data, missing Product JSON-LD</span></p>
       </div>
     </div>
   </div>
@@ -366,19 +388,19 @@ section{margin-left:56px}
     <div class="two reveal d2">
       <div>
         <h3>robots.txt</h3>
-        <p>Všichni AI crawleři mají <strong style="color:var(--cream)">plný přístup</strong> k veřejným stránkám. Žádné specifické blokování AI botů.</p>
+        <p><span class="cs">Všichni AI crawleři mají <strong style="color:var(--cream)">plný přístup</strong> k veřejným stránkám. Žádné specifické blokování AI botů.</span><span class="en">All AI crawlers have <strong style="color:var(--cream)">full access</strong> to public pages. No specific AI bot blocking.</span></p>
         <br>
         <div class="tbl-wrap">
           <table>
-            <thead><tr><th>Crawler</th><th>Vlastník</th><th>Status</th></tr></thead>
+            <thead><tr><th>Crawler</th><th><span class="cs">Vlastník</span><span class="en">Owner</span></th><th>Status</th></tr></thead>
             <tbody>
-              <tr><td>GPTBot</td><td>OpenAI</td><td><span class="badge ok">Povolen</span></td></tr>
-              <tr><td>OAI-SearchBot</td><td>OpenAI</td><td><span class="badge ok">Povolen</span></td></tr>
-              <tr><td>ChatGPT-User</td><td>OpenAI</td><td><span class="badge ok">Povolen</span></td></tr>
-              <tr><td>ClaudeBot</td><td>Anthropic</td><td><span class="badge ok">Povolen</span></td></tr>
-              <tr><td>PerplexityBot</td><td>Perplexity</td><td><span class="badge ok">Povolen</span></td></tr>
-              <tr><td>CCBot</td><td>Common Crawl</td><td><span class="badge warn">Zvážit blokaci</span></td></tr>
-              <tr><td>Bytespider</td><td>ByteDance</td><td><span class="badge warn">Zvážit blokaci</span></td></tr>
+              <tr><td>GPTBot</td><td>OpenAI</td><td><span class="badge ok"><span class="cs">Povolen</span><span class="en">Allowed</span></span></td></tr>
+              <tr><td>OAI-SearchBot</td><td>OpenAI</td><td><span class="badge ok"><span class="cs">Povolen</span><span class="en">Allowed</span></span></td></tr>
+              <tr><td>ChatGPT-User</td><td>OpenAI</td><td><span class="badge ok"><span class="cs">Povolen</span><span class="en">Allowed</span></span></td></tr>
+              <tr><td>ClaudeBot</td><td>Anthropic</td><td><span class="badge ok"><span class="cs">Povolen</span><span class="en">Allowed</span></span></td></tr>
+              <tr><td>PerplexityBot</td><td>Perplexity</td><td><span class="badge ok"><span class="cs">Povolen</span><span class="en">Allowed</span></span></td></tr>
+              <tr><td>CCBot</td><td>Common Crawl</td><td><span class="badge warn"><span class="cs">Zvážit blokaci</span><span class="en">Consider blocking</span></span></td></tr>
+              <tr><td>Bytespider</td><td>ByteDance</td><td><span class="badge warn"><span class="cs">Zvážit blokaci</span><span class="en">Consider blocking</span></span></td></tr>
             </tbody>
           </table>
         </div>
@@ -386,20 +408,20 @@ section{margin-left:56px}
       <div>
         <h3>llms.txt</h3>
         <div class="card" style="border-color:rgba(233,55,69,.25)">
-          <span class="badge bad" style="margin-bottom:12px">Chybí</span>
-          <p>Soubor <code style="color:var(--cream)">/llms.txt</code> vrací 404. Web nemá žádnou strukturovanou navigaci pro LLM modely.</p>
+          <span class="badge bad" style="margin-bottom:12px"><span class="cs">Chybí</span><span class="en">Missing</span></span>
+          <p><span class="cs">Soubor <code style="color:var(--cream)">/llms.txt</code> vrací 404. Web nemá žádnou strukturovanou navigaci pro LLM modely.</span><span class="en">The file <code style="color:var(--cream)">/llms.txt</code> returns 404. The website has no structured navigation for LLM models.</span></p>
           <br>
-          <h3 style="color:var(--green);font-size:.8rem">Doporučení</h3>
-          <p>Vytvořit llms.txt s přehledem webu, klíčovými stránkami, fakty o CGE a kontaktem. Viz sekce s doporučeními níže.</p>
+          <h3 style="color:var(--green);font-size:.8rem"><span class="cs">Doporučení</span><span class="en">Recommendation</span></h3>
+          <p><span class="cs">Vytvořit llms.txt s přehledem webu, klíčovými stránkami, fakty o CGE a kontaktem. Viz sekce s doporučeními níže.</span><span class="en">Create llms.txt with a website overview, key pages, CGE facts, and contact info. See the recommendations section below.</span></p>
         </div>
         <br>
         <h3>SSR Status</h3>
         <div class="card">
           <span class="badge ok" style="margin-bottom:12px">Server-Side Rendered</span>
-          <p>Obsah je renderovaný na serveru (Shoptet). AI crawleři nemusí spouštět JavaScript.</p>
+          <p><span class="cs">Obsah je renderovaný na serveru (Shoptet). AI crawleři nemusí spouštět JavaScript.</span><span class="en">Content is server-side rendered (Shoptet). AI crawlers do not need to execute JavaScript.</span></p>
           <br>
-          <span class="badge warn" style="margin-bottom:8px">Ale pozor</span>
-          <p style="font-size:.85rem">H1 skrytý CSS (<code>display:none</code>). Ceny inicálně skryté JS.</p>
+          <span class="badge warn" style="margin-bottom:8px"><span class="cs">Ale pozor</span><span class="en">Caution</span></span>
+          <p style="font-size:.85rem"><span class="cs">H1 skrytý CSS (<code>display:none</code>). Ceny inicálně skryté JS.</span><span class="en">H1 hidden via CSS (<code>display:none</code>). Prices initially hidden by JS.</span></p>
         </div>
       </div>
     </div>
@@ -411,64 +433,64 @@ section{margin-left:56px}
   <div class="narrow">
     <span class="sec-num reveal">04 /</span>
     <h2 class="reveal d1">Brand Mentions</h2>
-    <p class="subtitle reveal d2">Brand mentions korelují 3x silněji s AI viditelností než zpětné odkazy. CGE má silnou off-site přítomnost, kterou e-shop nevyužívá.</p>
+    <p class="subtitle reveal d2"><span class="cs">Brand mentions korelují 3x silněji s AI viditelností než zpětné odkazy. CGE má silnou off-site přítomnost, kterou e-shop nevyužívá.</span><span class="en">Brand mentions correlate 3x more strongly with AI visibility than backlinks. CGE has strong off-site presence that the e-shop does not leverage.</span></p>
 
     <div class="brand-grid reveal d3">
       <div class="brand-item">
         <div class="brand-name">BoardGameGeek</div>
-        <div class="brand-str"><span class="badge strong">Velmi silná</span></div>
-        <div class="brand-detail">40+ her, Through the Ages v top 15 all-time, Codenames #127</div>
+        <div class="brand-str"><span class="badge strong"><span class="cs">Velmi silná</span><span class="en">Very Strong</span></span></div>
+        <div class="brand-detail"><span class="cs">40+ her, Through the Ages v top 15 all-time, Codenames #127</span><span class="en">40+ games, Through the Ages in top 15 all-time, Codenames #127</span></div>
       </div>
       <div class="brand-item">
-        <div class="brand-name">Wikipedia (hry)</div>
-        <div class="brand-str"><span class="badge strong">Silná</span></div>
-        <div class="brand-detail">Codenames: 1,866 slov, 23 ref. Through the Ages: 15 ref</div>
+        <div class="brand-name"><span class="cs">Wikipedia (hry)</span><span class="en">Wikipedia (games)</span></div>
+        <div class="brand-str"><span class="badge strong"><span class="cs">Silná</span><span class="en">Strong</span></span></div>
+        <div class="brand-detail"><span class="cs">Codenames: 1,866 slov, 23 ref. Through the Ages: 15 ref</span><span class="en">Codenames: 1,866 words, 23 ref. Through the Ages: 15 ref</span></div>
       </div>
       <div class="brand-item">
-        <div class="brand-name">Wikipedia (firma)</div>
-        <div class="brand-str"><span class="badge weak">Slabá</span></div>
-        <div class="brand-detail">Stub ~145 slov, 5 citací. Kritická slabina pro ChatGPT</div>
+        <div class="brand-name"><span class="cs">Wikipedia (firma)</span><span class="en">Wikipedia (company)</span></div>
+        <div class="brand-str"><span class="badge weak"><span class="cs">Slabá</span><span class="en">Weak</span></span></div>
+        <div class="brand-detail"><span class="cs">Stub ~145 slov, 5 citací. Kritická slabina pro ChatGPT</span><span class="en">Stub ~145 words, 5 citations. Critical weakness for ChatGPT</span></div>
       </div>
       <div class="brand-item">
-        <div class="brand-name">YouTube (3rd party)</div>
-        <div class="brand-str"><span class="badge strong">Velmi silná</span></div>
-        <div class="brand-detail">Shut Up & Sit Down, Dice Tower, stovky recenzí</div>
+        <div class="brand-name"><span class="cs">YouTube (3. strany)</span><span class="en">YouTube (3rd party)</span></div>
+        <div class="brand-str"><span class="badge strong"><span class="cs">Velmi silná</span><span class="en">Very Strong</span></span></div>
+        <div class="brand-detail"><span class="cs">Shut Up & Sit Down, Dice Tower, stovky recenzí</span><span class="en">Shut Up & Sit Down, Dice Tower, hundreds of reviews</span></div>
       </div>
       <div class="brand-item">
-        <div class="brand-name">YouTube (vlastní)</div>
-        <div class="brand-str"><span class="badge mid">Střední</span></div>
-        <div class="brand-detail">@CzechGames, dokumentární série (8 epizod)</div>
+        <div class="brand-name"><span class="cs">YouTube (vlastní)</span><span class="en">YouTube (own)</span></div>
+        <div class="brand-str"><span class="badge mid"><span class="cs">Střední</span><span class="en">Medium</span></span></div>
+        <div class="brand-detail"><span class="cs">@CzechGames, dokumentární série (8 epizod)</span><span class="en">@CzechGames, documentary series (8 episodes)</span></div>
       </div>
       <div class="brand-item">
         <div class="brand-name">Reddit</div>
-        <div class="brand-str"><span class="badge strong">Silná</span></div>
-        <div class="brand-detail">r/boardgames (5M+ členů), časté diskuze o CGE hrách</div>
+        <div class="brand-str"><span class="badge strong"><span class="cs">Silná</span><span class="en">Strong</span></span></div>
+        <div class="brand-detail"><span class="cs">r/boardgames (5M+ členů), časté diskuze o CGE hrách</span><span class="en">r/boardgames (5M+ members), frequent discussions about CGE games</span></div>
       </div>
       <div class="brand-item">
         <div class="brand-name">Instagram</div>
-        <div class="brand-str"><span class="badge mid">Střední</span></div>
-        <div class="brand-detail">@czech_games_edition ~25,000 followerů</div>
+        <div class="brand-str"><span class="badge mid"><span class="cs">Střední</span><span class="en">Medium</span></span></div>
+        <div class="brand-detail"><span class="cs">@czech_games_edition ~25,000 followerů</span><span class="en">@czech_games_edition ~25,000 followers</span></div>
       </div>
       <div class="brand-item">
         <div class="brand-name">Facebook</div>
-        <div class="brand-str"><span class="badge mid">Střední</span></div>
-        <div class="brand-detail">/CzechGames ~19,000 followerů</div>
+        <div class="brand-str"><span class="badge mid"><span class="cs">Střední</span><span class="en">Medium</span></span></div>
+        <div class="brand-detail"><span class="cs">/CzechGames ~19,000 followerů</span><span class="en">/CzechGames ~19,000 followers</span></div>
       </div>
       <div class="brand-item">
         <div class="brand-name">LinkedIn</div>
-        <div class="brand-str"><span class="badge weak">Slabá</span></div>
-        <div class="brand-detail">~546 followerů, nízká B2B viditelnost</div>
+        <div class="brand-str"><span class="badge weak"><span class="cs">Slabá</span><span class="en">Weak</span></span></div>
+        <div class="brand-detail"><span class="cs">~546 followerů, nízká B2B viditelnost</span><span class="en">~546 followers, low B2B visibility</span></div>
       </div>
       <div class="brand-item">
         <div class="brand-name">Amazon</div>
-        <div class="brand-str"><span class="badge mid">Přítomna</span></div>
-        <div class="brand-detail">Dedikovaná brand store stránka</div>
+        <div class="brand-str"><span class="badge mid"><span class="cs">Přítomna</span><span class="en">Present</span></span></div>
+        <div class="brand-detail"><span class="cs">Dedikovaná brand store stránka</span><span class="en">Dedicated brand store page</span></div>
       </div>
     </div>
 
     <div class="card reveal d4" style="margin-top:24px;border-color:rgba(233,55,69,.2);background:rgba(233,55,69,.04)">
-      <h3 style="color:var(--red)">Paradox</h3>
-      <p>CGE má jedny z nejúspěšnějších deskových her na světě <strong style="color:var(--cream)">(Codenames: 16M+ kopií, Spiel des Jahres 2016)</strong>, ale e-shop tuto autoritu vůbec nevyužívá. Žádné zmínky o ocenění, žádná fakta, žádný citovatelný obsah.</p>
+      <h3 style="color:var(--red)"><span class="cs">Paradox</span><span class="en">Paradox</span></h3>
+      <p><span class="cs">CGE má jedny z nejúspěšnějších deskových her na světě <strong style="color:var(--cream)">(Codenames: 16M+ kopií, Spiel des Jahres 2016)</strong>, ale e-shop tuto autoritu vůbec nevyužívá. Žádné zmínky o ocenění, žádná fakta, žádný citovatelný obsah.</span><span class="en">CGE has some of the most successful board games in the world <strong style="color:var(--cream)">(Codenames: 16M+ copies, Spiel des Jahres 2016)</strong>, but the e-shop does not leverage this authority at all. No mentions of awards, no facts, no citable content.</span></p>
     </div>
   </div>
 </section>
@@ -478,33 +500,33 @@ section{margin-left:56px}
   <div class="narrow">
     <span class="sec-num reveal">05 /</span>
     <h2 class="reveal d1">Passage-Level Citability</h2>
-    <p class="subtitle reveal d2">Optimální délka citovatelného bloku pro AI je 134-167 slov. Na celém webu neexistuje ani jeden takový blok.</p>
+    <p class="subtitle reveal d2"><span class="cs">Optimální délka citovatelného bloku pro AI je 134-167 slov. Na celém webu neexistuje ani jeden takový blok.</span><span class="en">The optimal length of a citable block for AI is 134-167 words. There is not a single such block on the entire website.</span></p>
 
-    <h3 class="reveal d2">Produktové stránky</h3>
+    <h3 class="reveal d2"><span class="cs">Produktové stránky</span><span class="en">Product Pages</span></h3>
     <div class="tbl-wrap reveal d3">
       <table>
-        <thead><tr><th>Stránka</th><th>Délka popisu</th><th>Citovatelnost</th><th>Chybí</th></tr></thead>
+        <thead><tr><th><span class="cs">Stránka</span><span class="en">Page</span></th><th><span class="cs">Délka popisu</span><span class="en">Description Length</span></th><th><span class="cs">Citovatelnost</span><span class="en">Citability</span></th><th><span class="cs">Chybí</span><span class="en">Missing</span></th></tr></thead>
         <tbody>
-          <tr><td style="color:var(--cream);font-weight:500">Codenames</td><td>~100 slov</td><td><span class="badge bad">Nízká</span></td><td>Spiel des Jahres, designer, hráči, doba hry</td></tr>
-          <tr><td style="color:var(--cream);font-weight:500">Lost Ruins of Arnak</td><td>~150 slov</td><td><span class="badge mid">Střední</span></td><td>Designer, ocenění, BGG rating</td></tr>
-          <tr><td style="color:var(--cream);font-weight:500">SETI</td><td>~90 slov</td><td><span class="badge bad">Nízká</span></td><td>Příliš krátké, chybí fakta</td></tr>
+          <tr><td style="color:var(--cream);font-weight:500">Codenames</td><td><span class="cs">~100 slov</span><span class="en">~100 words</span></td><td><span class="badge bad"><span class="cs">Nízká</span><span class="en">Low</span></span></td><td><span class="cs">Spiel des Jahres, designer, hráči, doba hry</span><span class="en">Spiel des Jahres, designer, players, play time</span></td></tr>
+          <tr><td style="color:var(--cream);font-weight:500">Lost Ruins of Arnak</td><td><span class="cs">~150 slov</span><span class="en">~150 words</span></td><td><span class="badge mid"><span class="cs">Střední</span><span class="en">Medium</span></span></td><td><span class="cs">Designer, ocenění, BGG rating</span><span class="en">Designer, awards, BGG rating</span></td></tr>
+          <tr><td style="color:var(--cream);font-weight:500">SETI</td><td><span class="cs">~90 slov</span><span class="en">~90 words</span></td><td><span class="badge bad"><span class="cs">Nízká</span><span class="en">Low</span></span></td><td><span class="cs">Příliš krátké, chybí fakta</span><span class="en">Too short, missing facts</span></td></tr>
         </tbody>
       </table>
     </div>
 
-    <h3 class="reveal d3">Strukturální problémy</h3>
+    <h3 class="reveal d3"><span class="cs">Strukturální problémy</span><span class="en">Structural Issues</span></h3>
     <div class="tbl-wrap reveal d4">
       <table>
-        <thead><tr><th>Problém</th><th>Dopad na GEO</th></tr></thead>
+        <thead><tr><th><span class="cs">Problém</span><span class="en">Issue</span></th><th><span class="cs">Dopad na GEO</span><span class="en">GEO Impact</span></th></tr></thead>
         <tbody>
-          <tr><td>H1 skrytý CSS (<code>display:none</code>)</td><td><span class="badge bad">Kritický</span> &mdash; AI crawleři mohou ignorovat</td></tr>
-          <tr><td>Headings jako <code>&lt;div class="h4"&gt;</code></td><td><span class="badge bad">Kritický</span> &mdash; nejsou sémantické</td></tr>
-          <tr><td>Žádná About stránka</td><td><span class="badge bad">Kritický</span> &mdash; AI nemá zdroj o firmě</td></tr>
-          <tr><td>Žádný blog/content</td><td><span class="badge bad">Kritický</span> &mdash; nulový editorial obsah</td></tr>
-          <tr><td>FAQ bez schema</td><td><span class="badge warn">Vysoký</span> &mdash; žádné FAQPage rich results</td></tr>
-          <tr><td>Žádné hreflang tagy</td><td><span class="badge warn">Střední</span> &mdash; EU vs US shop nepropojeny</td></tr>
-          <tr><td>Meta descriptions duplicitní</td><td><span class="badge warn">Střední</span> &mdash; "Welcome to CGE store" 2x</td></tr>
-          <tr><td>Žádné publication dates</td><td><span class="badge mid">Střední</span> &mdash; čerstvost neověřitelná</td></tr>
+          <tr><td><span class="cs">H1 skrytý CSS (<code>display:none</code>)</span><span class="en">H1 hidden via CSS (<code>display:none</code>)</span></td><td><span class="badge bad"><span class="cs">Kritický</span><span class="en">Critical</span></span> &mdash; <span class="cs">AI crawleři mohou ignorovat</span><span class="en">AI crawlers may ignore it</span></td></tr>
+          <tr><td><span class="cs">Headings jako <code>&lt;div class="h4"&gt;</code></span><span class="en">Headings as <code>&lt;div class="h4"&gt;</code></span></td><td><span class="badge bad"><span class="cs">Kritický</span><span class="en">Critical</span></span> &mdash; <span class="cs">nejsou sémantické</span><span class="en">not semantic</span></td></tr>
+          <tr><td><span class="cs">Žádná About stránka</span><span class="en">No About page</span></td><td><span class="badge bad"><span class="cs">Kritický</span><span class="en">Critical</span></span> &mdash; <span class="cs">AI nemá zdroj o firmě</span><span class="en">AI has no source about the company</span></td></tr>
+          <tr><td><span class="cs">Žádný blog/content</span><span class="en">No blog/content</span></td><td><span class="badge bad"><span class="cs">Kritický</span><span class="en">Critical</span></span> &mdash; <span class="cs">nulový editorial obsah</span><span class="en">zero editorial content</span></td></tr>
+          <tr><td><span class="cs">FAQ bez schema</span><span class="en">FAQ without schema</span></td><td><span class="badge warn"><span class="cs">Vysoký</span><span class="en">High</span></span> &mdash; <span class="cs">žádné FAQPage rich results</span><span class="en">no FAQPage rich results</span></td></tr>
+          <tr><td><span class="cs">Žádné hreflang tagy</span><span class="en">No hreflang tags</span></td><td><span class="badge warn"><span class="cs">Střední</span><span class="en">Medium</span></span> &mdash; <span class="cs">EU vs US shop nepropojeny</span><span class="en">EU vs US shop not linked</span></td></tr>
+          <tr><td><span class="cs">Meta descriptions duplicitní</span><span class="en">Duplicate meta descriptions</span></td><td><span class="badge warn"><span class="cs">Střední</span><span class="en">Medium</span></span> &mdash; "Welcome to CGE store" 2x</td></tr>
+          <tr><td><span class="cs">Žádné publication dates</span><span class="en">No publication dates</span></td><td><span class="badge mid"><span class="cs">Střední</span><span class="en">Medium</span></span> &mdash; <span class="cs">čerstvost neověřitelná</span><span class="en">freshness unverifiable</span></td></tr>
         </tbody>
       </table>
     </div>
@@ -519,31 +541,31 @@ section{margin-left:56px}
 
     <div class="two gap-sm reveal d2">
       <div>
-        <h3 style="color:var(--green)">Přítomné</h3>
+        <h3 style="color:var(--green)"><span class="cs">Přítomné</span><span class="en">Present</span></h3>
         <div class="tbl-wrap">
           <table>
-            <thead><tr><th>Typ</th><th>Formát</th><th>Kvalita</th></tr></thead>
+            <thead><tr><th><span class="cs">Typ</span><span class="en">Type</span></th><th><span class="cs">Formát</span><span class="en">Format</span></th><th><span class="cs">Kvalita</span><span class="en">Quality</span></th></tr></thead>
             <tbody>
-              <tr><td>Organization</td><td>JSON-LD</td><td><span class="badge mid">Základní</span> &mdash; bug: <code>employee:""</code></td></tr>
+              <tr><td>Organization</td><td>JSON-LD</td><td><span class="badge mid"><span class="cs">Základní</span><span class="en">Basic</span></span> &mdash; bug: <code>employee:""</code></td></tr>
               <tr><td>WebSite + Search</td><td>Microdata</td><td><span class="badge ok">OK</span></td></tr>
-              <tr><td>Product + Offer</td><td>Microdata</td><td><span class="badge mid">Částečné</span> &mdash; chybí brand, rating</td></tr>
+              <tr><td>Product + Offer</td><td>Microdata</td><td><span class="badge mid"><span class="cs">Částečné</span><span class="en">Partial</span></span> &mdash; <span class="cs">chybí brand, rating</span><span class="en">missing brand, rating</span></td></tr>
               <tr><td>BreadcrumbList</td><td>Microdata</td><td><span class="badge ok">OK</span></td></tr>
             </tbody>
           </table>
         </div>
       </div>
       <div>
-        <h3 style="color:var(--red)">Chybějící (kritické)</h3>
+        <h3 style="color:var(--red)"><span class="cs">Chybějící (kritické)</span><span class="en">Missing (critical)</span></h3>
         <div class="tbl-wrap">
           <table>
-            <thead><tr><th>Typ</th><th>Kde</th></tr></thead>
+            <thead><tr><th><span class="cs">Typ</span><span class="en">Type</span></th><th><span class="cs">Kde</span><span class="en">Where</span></th></tr></thead>
             <tbody>
-              <tr><td style="color:var(--cream)">FAQPage</td><td>Homepage FAQ sekce</td></tr>
-              <tr><td style="color:var(--cream)">Product JSON-LD</td><td>Produktové stránky</td></tr>
-              <tr><td style="color:var(--cream)">brand v Product</td><td>Produktové stránky</td></tr>
-              <tr><td style="color:var(--cream)">aggregateRating</td><td>Produktové stránky</td></tr>
-              <tr><td style="color:var(--cream)">Person (designer)</td><td>Produktové stránky</td></tr>
-              <tr><td style="color:var(--cream)">Store / LocalBusiness</td><td>Kontaktní stránky</td></tr>
+              <tr><td style="color:var(--cream)">FAQPage</td><td><span class="cs">Homepage FAQ sekce</span><span class="en">Homepage FAQ section</span></td></tr>
+              <tr><td style="color:var(--cream)">Product JSON-LD</td><td><span class="cs">Produktové stránky</span><span class="en">Product pages</span></td></tr>
+              <tr><td style="color:var(--cream)">brand v Product</td><td><span class="cs">Produktové stránky</span><span class="en">Product pages</span></td></tr>
+              <tr><td style="color:var(--cream)">aggregateRating</td><td><span class="cs">Produktové stránky</span><span class="en">Product pages</span></td></tr>
+              <tr><td style="color:var(--cream)">Person (designer)</td><td><span class="cs">Produktové stránky</span><span class="en">Product pages</span></td></tr>
+              <tr><td style="color:var(--cream)">Store / LocalBusiness</td><td><span class="cs">Kontaktní stránky</span><span class="en">Contact pages</span></td></tr>
             </tbody>
           </table>
         </div>
@@ -556,38 +578,38 @@ section{margin-left:56px}
 <section id="top5">
   <div class="narrow">
     <span class="sec-num reveal">07 /</span>
-    <h2 class="reveal d1">Top 5 změn<br>s nejvyšším dopadem</h2>
+    <h2 class="reveal d1"><span class="cs">Top 5 změn<br>s nejvyšším dopadem</span><span class="en">Top 5 Changes<br>with Highest Impact</span></h2>
 
     <div class="impact-grid reveal d2">
       <div class="impact-card featured">
-        <span class="impact-tag">#1 / Kritické</span>
-        <h3>Vytvořit About stránku s citovatelným obsahem</h3>
-        <p>Vytvořit /about/ stránku s 500-800 slovy o Czech Games Edition. Zahrnout: založení (2007, Praha), klíčové hry, Spiel des Jahres 2016, 16M+ Codenames, vlastní výrobní závod (2024). Strukturovat do 134-167 slovních bloků s question-based headings. Přidat Organization a Person schema.</p>
-        <div class="impact-score">+15-20 bodů GEO skóre</div>
+        <span class="impact-tag"><span class="cs">#1 / Kritické</span><span class="en">#1 / Critical</span></span>
+        <h3><span class="cs">Vytvořit About stránku s citovatelným obsahem</span><span class="en">Create an About page with citable content</span></h3>
+        <p><span class="cs">Vytvořit /about/ stránku s 500-800 slovy o Czech Games Edition. Zahrnout: založení (2007, Praha), klíčové hry, Spiel des Jahres 2016, 16M+ Codenames, vlastní výrobní závod (2024). Strukturovat do 134-167 slovních bloků s question-based headings. Přidat Organization a Person schema.</span><span class="en">Create an /about/ page with 500-800 words about Czech Games Edition. Include: founding (2007, Prague), key games, Spiel des Jahres 2016, 16M+ Codenames, own manufacturing facility (2024). Structure into 134-167 word blocks with question-based headings. Add Organization and Person schema.</span></p>
+        <div class="impact-score"><span class="cs">+15-20 bodů GEO skóre</span><span class="en">+15-20 GEO score points</span></div>
       </div>
       <div class="impact-card">
         <span class="impact-tag">#2 /</span>
-        <h3>FAQPage schema + rozšířit FAQ</h3>
-        <p>Přidat FAQPage JSON-LD schema. Rozšířit odpovědi na 134-167 slov. Vytvořit dedikovanou /faq/ stránku. Přidat AI-relevantní otázky.</p>
-        <div class="impact-score">+8-10 bodů GEO skóre</div>
+        <h3><span class="cs">FAQPage schema + rozšířit FAQ</span><span class="en">FAQPage schema + expand FAQ</span></h3>
+        <p><span class="cs">Přidat FAQPage JSON-LD schema. Rozšířit odpovědi na 134-167 slov. Vytvořit dedikovanou /faq/ stránku. Přidat AI-relevantní otázky.</span><span class="en">Add FAQPage JSON-LD schema. Expand answers to 134-167 words. Create a dedicated /faq/ page. Add AI-relevant questions.</span></p>
+        <div class="impact-score"><span class="cs">+8-10 bodů GEO skóre</span><span class="en">+8-10 GEO score points</span></div>
       </div>
       <div class="impact-card">
         <span class="impact-tag">#3 /</span>
-        <h3>Obohatit produktové stránky</h3>
-        <p>Ke každé hře přidat: designer, hráči, doba hry, ocenění, BGG rating. Přidat "What is [Game]?" bloky. Implementovat Product JSON-LD.</p>
-        <div class="impact-score">+8-12 bodů GEO skóre</div>
+        <h3><span class="cs">Obohatit produktové stránky</span><span class="en">Enrich product pages</span></h3>
+        <p><span class="cs">Ke každé hře přidat: designer, hráči, doba hry, ocenění, BGG rating. Přidat "What is [Game]?" bloky. Implementovat Product JSON-LD.</span><span class="en">Add to each game: designer, players, play time, awards, BGG rating. Add "What is [Game]?" blocks. Implement Product JSON-LD.</span></p>
+        <div class="impact-score"><span class="cs">+8-12 bodů GEO skóre</span><span class="en">+8-12 GEO score points</span></div>
       </div>
       <div class="impact-card">
         <span class="impact-tag">#4 /</span>
-        <h3>Vytvořit llms.txt + opravit meta tagy</h3>
-        <p>Vytvořit /llms.txt s přehledem webu. Přepsat homepage title a description. Napsat unikátní descriptions pro kategorie.</p>
-        <div class="impact-score">+5-8 bodů GEO skóre</div>
+        <h3><span class="cs">Vytvořit llms.txt + opravit meta tagy</span><span class="en">Create llms.txt + fix meta tags</span></h3>
+        <p><span class="cs">Vytvořit /llms.txt s přehledem webu. Přepsat homepage title a description. Napsat unikátní descriptions pro kategorie.</span><span class="en">Create /llms.txt with a website overview. Rewrite homepage title and description. Write unique descriptions for categories.</span></p>
+        <div class="impact-score"><span class="cs">+5-8 bodů GEO skóre</span><span class="en">+5-8 GEO score points</span></div>
       </div>
       <div class="impact-card">
         <span class="impact-tag">#5 / Off-site</span>
-        <h3>Rozšířit Wikipedia firemní stránku</h3>
-        <p>Stub ~145 slov rozšířit na 800-1,200 slov s 15-20 citacemi. Přidat: History, Notable Games, Awards, Manufacturing. Wikipedia = 47.9% ChatGPT zdrojů.</p>
-        <div class="impact-score">Nejvyšší dopad na ChatGPT a Perplexity</div>
+        <h3><span class="cs">Rozšířit Wikipedia firemní stránku</span><span class="en">Expand Wikipedia company page</span></h3>
+        <p><span class="cs">Stub ~145 slov rozšířit na 800-1,200 slov s 15-20 citacemi. Přidat: History, Notable Games, Awards, Manufacturing. Wikipedia = 47.9% ChatGPT zdrojů.</span><span class="en">Expand the ~145-word stub to 800-1,200 words with 15-20 citations. Add: History, Notable Games, Awards, Manufacturing. Wikipedia = 47.9% of ChatGPT sources.</span></p>
+        <div class="impact-score"><span class="cs">Nejvyšší dopad na ChatGPT a Perplexity</span><span class="en">Highest impact on ChatGPT and Perplexity</span></div>
       </div>
     </div>
   </div>
@@ -597,38 +619,38 @@ section{margin-left:56px}
 <section id="plan">
   <div class="narrow">
     <span class="sec-num reveal">08 /</span>
-    <h2 class="reveal d1">Akční plán</h2>
+    <h2 class="reveal d1"><span class="cs">Akční plán</span><span class="en">Action Plan</span></h2>
 
-    <span class="phase-label reveal">Quick Wins / 1-2 týdny</span>
+    <span class="phase-label reveal"><span class="cs">Quick Wins / 1-2 týdny</span><span class="en">Quick Wins / 1-2 weeks</span></span>
     <div class="action-list reveal d1">
-      <div class="action-item"><div class="action-num">1</div><div class="action-text">Přepsat homepage H1 na viditelný, keyword-rich nadpis</div><div class="action-impact"><span class="badge mid">Střední</span></div></div>
-      <div class="action-item"><div class="action-num">2</div><div class="action-text">Přepsat meta title a description homepage</div><div class="action-impact"><span class="badge mid">Střední</span></div></div>
-      <div class="action-item"><div class="action-num">3</div><div class="action-text">Přidat "Czech Games Edition is..." definici (134-167 slov)</div><div class="action-impact"><span class="badge strong">Vysoký</span></div></div>
-      <div class="action-item"><div class="action-num">4</div><div class="action-text">Opravit title tagy produktů (dvojité mezery)</div><div class="action-impact"><span class="badge ok">Nízký</span></div></div>
-      <div class="action-item"><div class="action-num">5</div><div class="action-text">Přidat publication/update dates na stránky</div><div class="action-impact"><span class="badge ok">Nízký</span></div></div>
-      <div class="action-item"><div class="action-num">6</div><div class="action-text">Opravit Organization schema (smazat prázdný employee)</div><div class="action-impact"><span class="badge mid">Střední</span></div></div>
-      <div class="action-item"><div class="action-num">7</div><div class="action-text">Přidat Twitter Card meta tagy</div><div class="action-impact"><span class="badge ok">Nízký</span></div></div>
+      <div class="action-item"><div class="action-num">1</div><div class="action-text"><span class="cs">Přepsat homepage H1 na viditelný, keyword-rich nadpis</span><span class="en">Rewrite homepage H1 to a visible, keyword-rich heading</span></div><div class="action-impact"><span class="badge mid"><span class="cs">Střední</span><span class="en">Medium</span></span></div></div>
+      <div class="action-item"><div class="action-num">2</div><div class="action-text"><span class="cs">Přepsat meta title a description homepage</span><span class="en">Rewrite homepage meta title and description</span></div><div class="action-impact"><span class="badge mid"><span class="cs">Střední</span><span class="en">Medium</span></span></div></div>
+      <div class="action-item"><div class="action-num">3</div><div class="action-text"><span class="cs">Přidat "Czech Games Edition is..." definici (134-167 slov)</span><span class="en">Add a "Czech Games Edition is..." definition (134-167 words)</span></div><div class="action-impact"><span class="badge strong"><span class="cs">Vysoký</span><span class="en">High</span></span></div></div>
+      <div class="action-item"><div class="action-num">4</div><div class="action-text"><span class="cs">Opravit title tagy produktů (dvojité mezery)</span><span class="en">Fix product title tags (double spaces)</span></div><div class="action-impact"><span class="badge ok"><span class="cs">Nízký</span><span class="en">Low</span></span></div></div>
+      <div class="action-item"><div class="action-num">5</div><div class="action-text"><span class="cs">Přidat publication/update dates na stránky</span><span class="en">Add publication/update dates to pages</span></div><div class="action-impact"><span class="badge ok"><span class="cs">Nízký</span><span class="en">Low</span></span></div></div>
+      <div class="action-item"><div class="action-num">6</div><div class="action-text"><span class="cs">Opravit Organization schema (smazat prázdný employee)</span><span class="en">Fix Organization schema (remove empty employee)</span></div><div class="action-impact"><span class="badge mid"><span class="cs">Střední</span><span class="en">Medium</span></span></div></div>
+      <div class="action-item"><div class="action-num">7</div><div class="action-text"><span class="cs">Přidat Twitter Card meta tagy</span><span class="en">Add Twitter Card meta tags</span></div><div class="action-impact"><span class="badge ok"><span class="cs">Nízký</span><span class="en">Low</span></span></div></div>
     </div>
 
-    <span class="phase-label reveal">Medium Effort / 2-4 týdny</span>
+    <span class="phase-label reveal"><span class="cs">Medium Effort / 2-4 týdny</span><span class="en">Medium Effort / 2-4 weeks</span></span>
     <div class="action-list reveal d1">
-      <div class="action-item"><div class="action-num">8</div><div class="action-text">Vytvořit /llms.txt</div><div class="action-impact"><span class="badge mid">Střední</span></div></div>
-      <div class="action-item"><div class="action-num">9</div><div class="action-text">Implementovat FAQPage schema</div><div class="action-impact"><span class="badge strong">Vysoký</span></div></div>
-      <div class="action-item"><div class="action-num">10</div><div class="action-text">Vytvořit dedikovanou About stránku (500-800 slov)</div><div class="action-impact"><span class="badge bad">Velmi vysoký</span></div></div>
-      <div class="action-item"><div class="action-num">11</div><div class="action-text">Rozšířit produktové popisy o fakta a ocenění</div><div class="action-impact"><span class="badge strong">Vysoký</span></div></div>
-      <div class="action-item"><div class="action-num">12</div><div class="action-text">Přidat Product JSON-LD ke všem produktům</div><div class="action-impact"><span class="badge strong">Vysoký</span></div></div>
-      <div class="action-item"><div class="action-num">13</div><div class="action-text">Napsat unikátní descriptions pro kategorie</div><div class="action-impact"><span class="badge mid">Střední</span></div></div>
-      <div class="action-item"><div class="action-num">14</div><div class="action-text">Přidat Person schema pro designéry her</div><div class="action-impact"><span class="badge mid">Střední</span></div></div>
-      <div class="action-item"><div class="action-num">15</div><div class="action-text">Vytvořit dedikovanou FAQ stránku s rozšířenými odpověďmi</div><div class="action-impact"><span class="badge strong">Vysoký</span></div></div>
+      <div class="action-item"><div class="action-num">8</div><div class="action-text"><span class="cs">Vytvořit /llms.txt</span><span class="en">Create /llms.txt</span></div><div class="action-impact"><span class="badge mid"><span class="cs">Střední</span><span class="en">Medium</span></span></div></div>
+      <div class="action-item"><div class="action-num">9</div><div class="action-text"><span class="cs">Implementovat FAQPage schema</span><span class="en">Implement FAQPage schema</span></div><div class="action-impact"><span class="badge strong"><span class="cs">Vysoký</span><span class="en">High</span></span></div></div>
+      <div class="action-item"><div class="action-num">10</div><div class="action-text"><span class="cs">Vytvořit dedikovanou About stránku (500-800 slov)</span><span class="en">Create a dedicated About page (500-800 words)</span></div><div class="action-impact"><span class="badge bad"><span class="cs">Velmi vysoký</span><span class="en">Very High</span></span></div></div>
+      <div class="action-item"><div class="action-num">11</div><div class="action-text"><span class="cs">Rozšířit produktové popisy o fakta a ocenění</span><span class="en">Expand product descriptions with facts and awards</span></div><div class="action-impact"><span class="badge strong"><span class="cs">Vysoký</span><span class="en">High</span></span></div></div>
+      <div class="action-item"><div class="action-num">12</div><div class="action-text"><span class="cs">Přidat Product JSON-LD ke všem produktům</span><span class="en">Add Product JSON-LD to all products</span></div><div class="action-impact"><span class="badge strong"><span class="cs">Vysoký</span><span class="en">High</span></span></div></div>
+      <div class="action-item"><div class="action-num">13</div><div class="action-text"><span class="cs">Napsat unikátní descriptions pro kategorie</span><span class="en">Write unique descriptions for categories</span></div><div class="action-impact"><span class="badge mid"><span class="cs">Střední</span><span class="en">Medium</span></span></div></div>
+      <div class="action-item"><div class="action-num">14</div><div class="action-text"><span class="cs">Přidat Person schema pro designéry her</span><span class="en">Add Person schema for game designers</span></div><div class="action-impact"><span class="badge mid"><span class="cs">Střední</span><span class="en">Medium</span></span></div></div>
+      <div class="action-item"><div class="action-num">15</div><div class="action-text"><span class="cs">Vytvořit dedikovanou FAQ stránku s rozšířenými odpověďmi</span><span class="en">Create a dedicated FAQ page with expanded answers</span></div><div class="action-impact"><span class="badge strong"><span class="cs">Vysoký</span><span class="en">High</span></span></div></div>
     </div>
 
-    <span class="phase-label reveal">High Impact / 1-3 měsíce</span>
+    <span class="phase-label reveal"><span class="cs">High Impact / 1-3 měsíce</span><span class="en">High Impact / 1-3 months</span></span>
     <div class="action-list reveal d1">
-      <div class="action-item"><div class="action-num">16</div><div class="action-text">Rozšířit Wikipedia firemní stránku (800-1200 slov)</div><div class="action-impact"><span class="badge bad">Velmi vysoký</span></div></div>
-      <div class="action-item"><div class="action-num">17</div><div class="action-text">Spustit content/blog sekci s herními průvodci</div><div class="action-impact"><span class="badge strong">Vysoký</span></div></div>
-      <div class="action-item"><div class="action-num">18</div><div class="action-text">Vybudovat YouTube obsah s brand mentions</div><div class="action-impact"><span class="badge strong">Vysoký</span></div></div>
-      <div class="action-item"><div class="action-num">19</div><div class="action-text">Implementovat hreflang tagy (EU vs US store)</div><div class="action-impact"><span class="badge mid">Střední</span></div></div>
-      <div class="action-item"><div class="action-num">20</div><div class="action-text">Vytvořit unique research content (statistiky, průzkumy)</div><div class="action-impact"><span class="badge bad">Velmi vysoký</span></div></div>
+      <div class="action-item"><div class="action-num">16</div><div class="action-text"><span class="cs">Rozšířit Wikipedia firemní stránku (800-1200 slov)</span><span class="en">Expand Wikipedia company page (800-1200 words)</span></div><div class="action-impact"><span class="badge bad"><span class="cs">Velmi vysoký</span><span class="en">Very High</span></span></div></div>
+      <div class="action-item"><div class="action-num">17</div><div class="action-text"><span class="cs">Spustit content/blog sekci s herními průvodci</span><span class="en">Launch a content/blog section with game guides</span></div><div class="action-impact"><span class="badge strong"><span class="cs">Vysoký</span><span class="en">High</span></span></div></div>
+      <div class="action-item"><div class="action-num">18</div><div class="action-text"><span class="cs">Vybudovat YouTube obsah s brand mentions</span><span class="en">Build YouTube content with brand mentions</span></div><div class="action-impact"><span class="badge strong"><span class="cs">Vysoký</span><span class="en">High</span></span></div></div>
+      <div class="action-item"><div class="action-num">19</div><div class="action-text"><span class="cs">Implementovat hreflang tagy (EU vs US store)</span><span class="en">Implement hreflang tags (EU vs US store)</span></div><div class="action-impact"><span class="badge mid"><span class="cs">Střední</span><span class="en">Medium</span></span></div></div>
+      <div class="action-item"><div class="action-num">20</div><div class="action-text"><span class="cs">Vytvořit unique research content (statistiky, průzkumy)</span><span class="en">Create unique research content (statistics, surveys)</span></div><div class="action-impact"><span class="badge bad"><span class="cs">Velmi vysoký</span><span class="en">Very High</span></span></div></div>
     </div>
   </div>
 </section>
@@ -637,13 +659,13 @@ section{margin-left:56px}
 <section id="examples">
   <div class="narrow">
     <span class="sec-num reveal">09 /</span>
-    <h2 class="reveal d1">Příklady<br>nového obsahu</h2>
-    <p class="subtitle reveal d2">Konkrétní ukázky citovatelných bloků optimalizovaných pro AI vyhledávání.</p>
+    <h2 class="reveal d1"><span class="cs">Příklady<br>nového obsahu</span><span class="en">Examples of<br>New Content</span></h2>
+    <p class="subtitle reveal d2"><span class="cs">Konkrétní ukázky citovatelných bloků optimalizovaných pro AI vyhledávání.</span><span class="en">Specific examples of citable blocks optimized for AI search.</span></p>
 
     <div class="steps reveal d3">
       <div class="sc">
-        <div class="sc-num">Homepage intro blok</div>
-        <h3>Nový H1 + úvodní odstavec (148 slov)</h3>
+        <div class="sc-num"><span class="cs">Homepage intro blok</span><span class="en">Homepage intro block</span></div>
+        <h3><span class="cs">Nový H1 + úvodní odstavec (148 slov)</span><span class="en">New H1 + introductory paragraph (148 words)</span></h3>
         <div class="code-block">
 <span class="tag">&lt;h1&gt;</span>Czech Games Edition Official Store<span class="tag">&lt;/h1&gt;</span>
 <span class="tag">&lt;p&gt;</span>Czech Games Edition (CGE) is a Prague-based board game
@@ -658,8 +680,8 @@ in the Czech Republic at our own production facility.<span class="tag">&lt;/p&gt
         </div>
       </div>
       <div class="sc">
-        <div class="sc-num">Codenames produktová stránka</div>
-        <h3>Rozšířený popis s definičním vzorem (134 slov)</h3>
+        <div class="sc-num"><span class="cs">Codenames produktová stránka</span><span class="en">Codenames product page</span></div>
+        <h3><span class="cs">Rozšířený popis s definičním vzorem (134 slov)</span><span class="en">Extended description with definition pattern (134 words)</span></h3>
         <div class="code-block">
 <span class="tag">&lt;h2&gt;</span>What is Codenames?<span class="tag">&lt;/h2&gt;</span>
 <span class="tag">&lt;p&gt;</span>Codenames is an award-winning social word game designed by
@@ -676,8 +698,8 @@ Disney Family Edition.<span class="tag">&lt;/p&gt;</span>
         </div>
       </div>
       <div class="sc">
-        <div class="sc-num">Navrhovaný llms.txt</div>
-        <h3>Strukturovaný soubor pro LLM crawlery</h3>
+        <div class="sc-num"><span class="cs">Navrhovaný llms.txt</span><span class="en">Proposed llms.txt</span></div>
+        <h3><span class="cs">Strukturovaný soubor pro LLM crawlery</span><span class="en">Structured file for LLM crawlers</span></h3>
         <div class="code-block">
 <span class="key"># Czech Games Edition Store</span>
 <span class="str">&gt; Official online store of Czech Games Edition (CGE),
@@ -704,18 +726,18 @@ Disney Family Edition.<span class="tag">&lt;/p&gt;</span>
 <section id="conclusion">
   <div class="narrow" style="text-align:center">
     <span class="sec-num reveal">10 /</span>
-    <h2 class="reveal d1">Závěr</h2>
+    <h2 class="reveal d1"><span class="cs">Závěr</span><span class="en">Conclusion</span></h2>
     <div class="card reveal d2" style="max-width:800px;margin:0 auto;text-align:left;border-color:rgba(233,55,69,.2);background:linear-gradient(135deg,rgba(233,55,69,.06),transparent)">
-      <p style="font-size:1.05rem;line-height:1.85;margin-bottom:16px">Shop.czechgames.com má <strong style="color:var(--cream)">paradoxní pozici</strong>: Czech Games Edition je globálně uznávaný vydavatel s extrémně silnou brand awareness v herní komunitě, ale jejich e-shop tuto autoritu prakticky vůbec nevyužívá pro AI search viditelnost.</p>
-      <p style="font-size:1.05rem;line-height:1.85;margin-bottom:24px">Web je funkční e-shop s čistou strukturou a SSR, ale z pohledu GEO je téměř "prázdný" — chybí textový obsah, schema markup je minimální, meta tagy jsou generické, a neexistuje žádný editorial/content layer.</p>
+      <p style="font-size:1.05rem;line-height:1.85;margin-bottom:16px"><span class="cs">Shop.czechgames.com má <strong style="color:var(--cream)">paradoxní pozici</strong>: Czech Games Edition je globálně uznávaný vydavatel s extrémně silnou brand awareness v herní komunitě, ale jejich e-shop tuto autoritu prakticky vůbec nevyužívá pro AI search viditelnost.</span><span class="en">Shop.czechgames.com has a <strong style="color:var(--cream)">paradoxical position</strong>: Czech Games Edition is a globally recognized publisher with extremely strong brand awareness in the gaming community, but their e-shop practically does not leverage this authority for AI search visibility.</span></p>
+      <p style="font-size:1.05rem;line-height:1.85;margin-bottom:24px"><span class="cs">Web je funkční e-shop s čistou strukturou a SSR, ale z pohledu GEO je téměř "prázdný" — chybí textový obsah, schema markup je minimální, meta tagy jsou generické, a neexistuje žádný editorial/content layer.</span><span class="en">The website is a functional e-shop with clean structure and SSR, but from a GEO perspective it is almost "empty" — text content is missing, schema markup is minimal, meta tags are generic, and there is no editorial/content layer.</span></p>
       <div style="display:flex;gap:24px;flex-wrap:wrap">
         <div style="flex:1;min-width:200px;padding:20px;background:var(--bg);border-radius:8px;border-left:3px solid var(--green)">
-          <div style="font-family:var(--fh);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--green);margin-bottom:6px">Příležitost</div>
-          <p style="font-size:.88rem;line-height:1.6">Skóre může vzrůst z <strong style="color:var(--cream)">28 na 55-65 bodů</strong> během 4-6 týdnů implementací on-site změn.</p>
+          <div style="font-family:var(--fh);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--green);margin-bottom:6px"><span class="cs">Příležitost</span><span class="en">Opportunity</span></div>
+          <p style="font-size:.88rem;line-height:1.6"><span class="cs">Skóre může vzrůst z <strong style="color:var(--cream)">28 na 55-65 bodů</strong> během 4-6 týdnů implementací on-site změn.</span><span class="en">The score can rise from <strong style="color:var(--cream)">28 to 55-65 points</strong> within 4-6 weeks by implementing on-site changes.</span></p>
         </div>
         <div style="flex:1;min-width:200px;padding:20px;background:var(--bg);border-radius:8px;border-left:3px solid var(--red)">
-          <div style="font-family:var(--fh);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--red);margin-bottom:6px">Riziko</div>
-          <p style="font-size:.88rem;line-height:1.6">Wikipedia stub = <strong style="color:var(--cream)">47.9% ChatGPT</strong> zdrojů nedostupných pro citaci CGE jako firmy.</p>
+          <div style="font-family:var(--fh);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--red);margin-bottom:6px"><span class="cs">Riziko</span><span class="en">Risk</span></div>
+          <p style="font-size:.88rem;line-height:1.6"><span class="cs">Wikipedia stub = <strong style="color:var(--cream)">47.9% ChatGPT</strong> zdrojů nedostupných pro citaci CGE jako firmy.</span><span class="en">Wikipedia stub = <strong style="color:var(--cream)">47.9% of ChatGPT</strong> sources unavailable for citing CGE as a company.</span></p>
         </div>
       </div>
     </div>
@@ -724,13 +746,37 @@ Disney Family Edition.<span class="tag">&lt;/p&gt;</span>
 
 <!-- FOOTER -->
 <footer>
-  <h2 class="reveal">Další krok?</h2>
-  <p class="reveal d1">Kompletní GEO analýza připravena. Pojďme posunout viditelnost CGE v AI vyhledávání.</p>
-  <a href="https://czechgames.vercel.app/" class="cta reveal d2">&larr; Zpět na nabídku</a>
-  <div class="footer-note">GEO Report &mdash; shop.czechgames.com &mdash; 25. března 2026 &mdash; Magexo</div>
+  <h2 class="reveal"><span class="cs">Další krok?</span><span class="en">Next Step?</span></h2>
+  <p class="reveal d1"><span class="cs">Kompletní GEO analýza připravena. Pojďme posunout viditelnost CGE v AI vyhledávání.</span><span class="en">Complete GEO analysis ready. Let's boost CGE's visibility in AI search.</span></p>
+  <a href="https://czechgames.vercel.app/" class="cta reveal d2"><span class="cs">&larr; Zpět na nabídku</span><span class="en">&larr; Back to offer</span></a>
+  <div class="footer-note"><span class="cs">GEO Report &mdash; shop.czechgames.com &mdash; 25. března 2026 &mdash; Magexo</span><span class="en">GEO Report &mdash; shop.czechgames.com &mdash; March 25, 2026 &mdash; Magexo</span></div>
 </footer>
 
 <script>
+// Language switching
+function setLang(lang) {
+  if (lang === 'en') {
+    document.body.classList.add('lang-en');
+    document.getElementById('btn-en').classList.add('active');
+    document.getElementById('btn-cs').classList.remove('active');
+    document.documentElement.lang = 'en';
+  } else {
+    document.body.classList.remove('lang-en');
+    document.getElementById('btn-cs').classList.add('active');
+    document.getElementById('btn-en').classList.remove('active');
+    document.documentElement.lang = 'cs';
+  }
+  localStorage.setItem('cge-lang', lang);
+}
+
+// Load saved preference
+(function() {
+  var saved = localStorage.getItem('cge-lang');
+  if (saved === 'en') {
+    setLang('en');
+  }
+})();
+
 // Progress bar
 window.addEventListener('scroll',()=>{
   const h=document.documentElement.scrollHeight-window.innerHeight;
