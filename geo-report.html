@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GEO Analýza — shop.czechgames.com</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&family=Montserrat:wght@300;400;500;600;700&family=Caveat:wght@700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#1a1832;--bg2:#221f3a;--bg3:#2c2848;
+  --cream:#FFFFFF;--cream2:#a8a4c0;
+  --red:#E93745;--red-hover:#d42f3c;
+  --blue:#60BCF4;--gold:#FEAF15;--green:#3DD39B;--purple:#B75EED;
+  --border:rgba(255,255,255,.08);
+  --fh:'Quicksand',sans-serif;--fb:'Montserrat',sans-serif;--ft:'Caveat',cursive;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--cream2);font-family:var(--fb);font-weight:300;line-height:1.85;font-size:1.05rem}
+::selection{background:var(--red);color:#fff}
+
+/* Progress bar */
+#progress{position:fixed;top:0;left:0;height:4px;background:linear-gradient(90deg,var(--red),var(--gold),var(--green),var(--blue),var(--purple));background-size:300% 100%;animation:gradShift 4s linear infinite;z-index:1000;transition:width .15s}
+@keyframes gradShift{0%{background-position:0 0}100%{background-position:300% 0}}
+
+/* Nav */
+nav{position:fixed;top:0;left:0;right:0;z-index:99;padding:18px 56px;display:flex;align-items:center;justify-content:space-between;background:linear-gradient(180deg,rgba(26,24,50,.95),rgba(26,24,50,.6));backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+.logo{font-family:var(--fh);font-size:1.15rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--cream);text-decoration:none}
+.logo span{color:var(--red)}
+nav a.back{font-family:var(--fb);font-size:.82rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--cream2);text-decoration:none;padding:8px 20px;border:1px solid var(--border);border-radius:6px;transition:.3s}
+nav a.back:hover{border-color:rgba(233,55,69,.35);color:var(--cream);background:rgba(233,55,69,.08)}
+
+/* Sections */
+section{padding:120px 56px}
+section:nth-child(even){background:var(--bg2)}
+.narrow{max-width:1200px;margin:0 auto}
+
+/* Section headers */
+.sec-num{font-family:var(--ft);font-size:1.3rem;color:var(--red);margin-bottom:8px;display:block}
+h1,h2,h3{font-family:var(--fh);color:var(--cream);font-weight:700;text-transform:uppercase;line-height:.92;letter-spacing:-.01em}
+h1{font-size:clamp(2.8rem,5vw,5.5rem);margin-bottom:24px}
+h2{font-size:clamp(1.8rem,3.5vw,3rem);margin-bottom:40px}
+h3{font-size:1.15rem;letter-spacing:.06em;margin-bottom:20px;text-transform:uppercase}
+.subtitle{font-family:var(--fb);font-weight:300;font-size:1.1rem;color:var(--cream2);max-width:700px;line-height:1.75;margin-bottom:48px}
+
+/* Hero */
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;position:relative;background:radial-gradient(ellipse at 50% 80%,rgba(233,55,69,.08),transparent 60%)}
+.hero h1{font-size:clamp(3rem,7vw,7rem);margin-bottom:16px}
+.hero .score-ring{width:220px;height:220px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0 auto 40px;position:relative;background:conic-gradient(var(--red) 0deg,var(--red) 100.8deg,rgba(255,255,255,.06) 100.8deg);-webkit-mask:radial-gradient(circle,transparent 85px,#000 86px);mask:radial-gradient(circle,transparent 85px,#000 86px)}
+.score-inner{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.score-num{font-family:var(--fh);font-size:3.8rem;font-weight:700;color:var(--red);line-height:1}
+.score-label{font-family:var(--fb);font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--cream2);margin-top:4px}
+.hero .meta{display:flex;gap:32px;flex-wrap:wrap;justify-content:center;margin-top:12px}
+.hero .meta span{font-size:.85rem;color:var(--cream2)}
+.hero .meta strong{color:var(--cream);font-weight:600}
+
+/* Stat grid */
+.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;margin-bottom:48px}
+.stat-card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:32px 24px;text-align:center;transition:.3s}
+.stat-card:hover{border-color:rgba(233,55,69,.25);transform:translateY(-2px)}
+.stat-card .num{font-family:var(--fh);font-size:2.4rem;font-weight:700;color:var(--cream);line-height:1;margin-bottom:6px}
+.stat-card .num.red{color:var(--red)}
+.stat-card .num.gold{color:var(--gold)}
+.stat-card .num.green{color:var(--green)}
+.stat-card .num.blue{color:var(--blue)}
+.stat-card .num.purple{color:var(--purple)}
+.stat-card .lbl{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--cream2)}
+
+/* Platform cards */
+.platform-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;margin-bottom:0}
+.plat-card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:28px 24px;position:relative;overflow:hidden;transition:.3s}
+.plat-card:hover{border-color:rgba(233,55,69,.25)}
+.plat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--red);transform:scaleX(0);transition:.3s;transform-origin:left}
+.plat-card:hover::before{transform:scaleX(1)}
+.plat-card h3{font-size:.85rem;margin-bottom:12px}
+.plat-card .plat-score{font-family:var(--fh);font-size:2rem;font-weight:700;margin-bottom:8px}
+.plat-card .plat-note{font-size:.82rem;line-height:1.6;color:var(--cream2)}
+
+/* Tables */
+.tbl-wrap{overflow-x:auto;margin:24px 0 32px;border-radius:8px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.88rem}
+thead{background:var(--bg3)}
+th{font-family:var(--fh);font-weight:600;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--cream);padding:14px 18px;text-align:left;border-bottom:1px solid var(--border)}
+td{padding:12px 18px;border-bottom:1px solid var(--border);color:var(--cream2)}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:rgba(233,55,69,.03)}
+
+/* Status badges */
+.badge{display:inline-block;padding:3px 10px;border-radius:4px;font-size:.7rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;font-family:var(--fh)}
+.badge.ok{background:rgba(61,211,155,.12);color:var(--green)}
+.badge.warn{background:rgba(254,175,21,.12);color:var(--gold)}
+.badge.bad{background:rgba(233,55,69,.12);color:var(--red)}
+.badge.miss{background:rgba(96,188,244,.12);color:var(--blue)}
+.badge.strong{background:rgba(61,211,155,.12);color:var(--green)}
+.badge.mid{background:rgba(254,175,21,.12);color:var(--gold)}
+.badge.weak{background:rgba(233,55,69,.12);color:var(--red)}
+
+/* Two col */
+.two{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
+.two.gap-sm{gap:40px}
+
+/* Cards */
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:32px 28px;position:relative;overflow:hidden;transition:.3s}
+.card:hover{border-color:rgba(233,55,69,.25)}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--red);transform:scaleX(0);transition:.3s;transform-origin:left}
+.card:hover::before{transform:scaleX(1)}
+.card h3{margin-bottom:14px}
+.card p{font-size:.9rem;line-height:1.75;margin-bottom:12px}
+
+/* Step cards */
+.steps{display:flex;flex-direction:column;gap:2px}
+.sc{background:var(--bg2);border:1px solid var(--border);border-left:3px solid var(--red);border-radius:0 8px 8px 0;padding:24px 28px;transition:.3s}
+.sc:hover{background:var(--bg3)}
+.sc-num{font-family:var(--ft);font-size:1.1rem;color:var(--red);margin-bottom:2px}
+.sc h3{font-size:.95rem;margin-bottom:8px}
+.sc p{font-size:.88rem;line-height:1.7}
+
+/* Impact cards */
+.impact-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px}
+.impact-card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:32px 28px;position:relative;overflow:hidden;transition:.3s}
+.impact-card:hover{border-color:rgba(233,55,69,.25);transform:translateY(-2px)}
+.impact-card.featured{background:var(--red);border-color:var(--red);grid-column:1/-1}
+.impact-card.featured h3,.impact-card.featured p,.impact-card.featured .impact-tag{color:#fff}
+.impact-card.featured .impact-score{color:#fff;opacity:.9}
+.impact-tag{font-family:var(--ft);font-size:1rem;color:var(--red);margin-bottom:4px;display:block}
+.impact-card h3{font-size:1rem;margin-bottom:10px}
+.impact-card p{font-size:.85rem;line-height:1.7}
+.impact-score{font-family:var(--fh);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--green);margin-top:12px;font-weight:600}
+
+/* Action plan */
+.phase-label{font-family:var(--ft);font-size:1.4rem;color:var(--red);margin-bottom:16px;display:block}
+.action-list{display:flex;flex-direction:column;gap:2px;margin-bottom:48px}
+.action-item{display:grid;grid-template-columns:40px 1fr 100px;gap:16px;align-items:center;background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:16px 20px;transition:.3s}
+.action-item:hover{border-color:rgba(233,55,69,.25);background:var(--bg3)}
+.action-num{font-family:var(--fh);font-weight:700;font-size:1.1rem;color:var(--red);text-align:center}
+.action-text{font-size:.9rem}
+.action-impact{text-align:right}
+
+/* Code blocks */
+.code-block{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:24px 28px;margin:16px 0 24px;overflow-x:auto;font-family:'SF Mono','Fira Code',monospace;font-size:.82rem;line-height:1.7;color:var(--cream2)}
+.code-block .key{color:var(--blue)}
+.code-block .str{color:var(--green)}
+.code-block .tag{color:var(--red)}
+.code-block .attr{color:var(--gold)}
+
+/* Checklist */
+.checklist{display:flex;flex-direction:column;gap:6px}
+.checklist li{list-style:none;display:flex;align-items:flex-start;gap:10px;font-size:.9rem;line-height:1.6}
+.checklist li::before{content:'';flex-shrink:0;width:18px;height:18px;border-radius:4px;border:2px solid var(--red);margin-top:4px}
+.checklist li.done::before{background:var(--red);box-shadow:inset 0 0 0 2px var(--bg2)}
+
+/* Brand grid */
+.brand-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:2px}
+.brand-item{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:20px 18px;transition:.3s}
+.brand-item:hover{border-color:rgba(233,55,69,.25)}
+.brand-item .brand-name{font-family:var(--fh);font-size:.82rem;font-weight:600;color:var(--cream);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px}
+.brand-item .brand-str{font-size:.75rem;margin-bottom:6px}
+.brand-item .brand-detail{font-size:.78rem;color:var(--cream2);line-height:1.5}
+
+/* Footer */
+footer{padding:80px 56px 40px;text-align:center;border-top:1px solid var(--border)}
+footer h2{margin-bottom:16px}
+footer p{font-size:.95rem;max-width:700px;margin:0 auto 32px}
+.cta{display:inline-block;padding:16px 40px;background:var(--red);color:#fff;font-family:var(--fh);font-weight:700;font-size:.88rem;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;border-radius:8px;transition:.3s}
+.cta:hover{background:var(--red-hover);transform:translateY(-2px);box-shadow:0 12px 40px rgba(233,55,69,.3)}
+.footer-note{font-size:.75rem;color:var(--cream2);margin-top:40px;opacity:.5}
+
+/* Scroll reveal */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .6s,transform .6s}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}.d4{transition-delay:.45s}
+
+/* Bar chart inline */
+.bar-wrap{margin:4px 0 8px}
+.bar{height:6px;border-radius:3px;background:var(--red);transition:width 1s ease}
+.bar.gold{background:var(--gold)}.bar.green{background:var(--green)}.bar.blue{background:var(--blue)}.bar.purple{background:var(--purple)}
+
+/* Sidebar nav */
+.sidebar{position:fixed;left:0;top:0;bottom:0;width:56px;background:var(--bg2);border-right:1px solid var(--border);z-index:100;display:flex;flex-direction:column;align-items:center;padding:72px 0 16px;overflow:hidden;transition:width .3s cubic-bezier(.4,0,.2,1)}
+.sidebar:hover,.sidebar.open{width:220px}
+.sidebar-toggle{width:36px;height:36px;border:1px solid var(--border);border-radius:8px;background:transparent;color:var(--cream2);cursor:pointer;display:flex;align-items:center;justify-content:center;margin-bottom:16px;flex-shrink:0;transition:.3s}
+.sidebar-toggle:hover{border-color:rgba(233,55,69,.35);color:var(--cream)}
+.sidebar-toggle svg{width:18px;height:18px;transition:transform .3s}
+.sidebar.open .sidebar-toggle svg{transform:rotate(180deg)}
+.sidebar-score{width:36px;height:36px;border-radius:50%;background:rgba(233,55,69,.12);display:flex;align-items:center;justify-content:center;font-family:var(--fh);font-size:.75rem;font-weight:700;color:var(--red);margin-bottom:20px;flex-shrink:0}
+.sidebar-links{display:flex;flex-direction:column;gap:2px;width:100%;padding:0 10px;overflow-y:auto;flex:1;scrollbar-width:none}
+.sidebar-links::-webkit-scrollbar{display:none}
+.sidebar-links a{display:flex;align-items:center;gap:12px;padding:9px 12px;border-radius:6px;text-decoration:none;color:var(--cream2);font-size:.78rem;font-family:var(--fb);font-weight:400;white-space:nowrap;transition:.2s;position:relative}
+.sidebar-links a:hover{background:rgba(255,255,255,.04);color:var(--cream)}
+.sidebar-links a.active{background:rgba(233,55,69,.1);color:var(--cream)}
+.sidebar-links a.active::before{content:'';position:absolute;left:0;top:6px;bottom:6px;width:3px;border-radius:0 2px 2px 0;background:var(--red)}
+.sidebar-links .sn{font-family:var(--ft);font-size:.9rem;color:var(--red);width:20px;text-align:center;flex-shrink:0}
+.sidebar-links .sl{opacity:0;transition:opacity .2s .05s}
+.sidebar:hover .sidebar-links .sl,.sidebar.open .sidebar-links .sl{opacity:1}
+.sidebar-back{margin-top:auto;padding:10px;width:100%;flex-shrink:0}
+.sidebar-back a{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:6px;border:1px solid var(--border);text-decoration:none;color:var(--cream2);font-size:.75rem;font-family:var(--fh);font-weight:600;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;transition:.2s}
+.sidebar-back a:hover{border-color:rgba(233,55,69,.35);color:var(--cream);background:rgba(233,55,69,.06)}
+.sidebar-back .sl{opacity:0;transition:opacity .2s .05s}
+.sidebar:hover .sidebar-back .sl,.sidebar.open .sidebar-back .sl{opacity:1}
+
+/* Offset body for sidebar */
+nav{left:56px;right:0}
+section{margin-left:56px}
+footer{margin-left:56px}
+.hero{margin-left:0;margin-left:0}
+section{margin-left:56px}
+
+/* Responsive */
+@media(max-width:900px){
+  section{padding:80px 24px;margin-left:56px}
+  nav{padding:14px 24px;left:56px}
+  .stat-grid,.platform-grid{grid-template-columns:1fr 1fr}
+  .two,.impact-grid{grid-template-columns:1fr}
+  .two{gap:40px}
+  .action-item{grid-template-columns:32px 1fr 80px}
+  footer{padding:60px 24px 32px}
+}
+@media(max-width:600px){
+  .sidebar{width:44px}
+  .sidebar:hover,.sidebar.open{width:200px}
+  .sidebar-score{width:30px;height:30px;font-size:.65rem}
+  .sidebar-toggle{width:30px;height:30px}
+  section{margin-left:44px}
+  footer{margin-left:44px}
+  nav{left:44px}
+  .stat-grid,.platform-grid{grid-template-columns:1fr}
+  .brand-grid{grid-template-columns:1fr 1fr}
+  .hero h1{font-size:2.6rem}
+  section{padding:60px 16px;margin-left:44px}
+}
+</style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<aside class="sidebar" id="sidebar">
+  <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle menu">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>
+  </button>
+  <div class="sidebar-score">28</div>
+  <div class="sidebar-links">
+    <a href="#top"><span class="sn"></span><span class="sl">GEO Score</span></a>
+    <a href="#score"><span class="sn">01</span><span class="sl">Skóre kritérií</span></a>
+    <a href="#platforms"><span class="sn">02</span><span class="sl">Platformy</span></a>
+    <a href="#crawlers"><span class="sn">03</span><span class="sl">AI Crawlers</span></a>
+    <a href="#brand"><span class="sn">04</span><span class="sl">Brand Mentions</span></a>
+    <a href="#citability"><span class="sn">05</span><span class="sl">Citability</span></a>
+    <a href="#schema"><span class="sn">06</span><span class="sl">Schema Markup</span></a>
+    <a href="#top5"><span class="sn">07</span><span class="sl">Top 5 změn</span></a>
+    <a href="#plan"><span class="sn">08</span><span class="sl">Akční plán</span></a>
+    <a href="#examples"><span class="sn">09</span><span class="sl">Příklady</span></a>
+    <a href="#conclusion"><span class="sn">10</span><span class="sl">Závěr</span></a>
+  </div>
+  <div class="sidebar-back">
+    <a href="https://czechgames.vercel.app/"><span style="font-size:1rem">&larr;</span><span class="sl">Zpět na nabídku</span></a>
+  </div>
+</aside>
+
+<!-- Progress bar -->
+<div id="progress" style="width:0%"></div>
+
+<!-- Nav -->
+<nav>
+  <a href="https://czechgames.vercel.app/" class="logo">MAG<span>EXO</span></a>
+  <span style="font-family:var(--fh);font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--cream2)">GEO Report &mdash; shop.czechgames.com</span>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <span class="sec-num">GEO Report /</span>
+  <h1>AI Search<br>Analýza</h1>
+  <div style="position:relative;width:220px;height:220px;margin:0 auto 32px">
+    <div class="score-ring"></div>
+    <div class="score-inner">
+      <div class="score-num">28</div>
+      <div class="score-label">GEO Score</div>
+    </div>
+  </div>
+  <p class="subtitle" style="text-align:center;margin:0 auto 32px">Generative Engine Optimization analýza e-shopu shop.czechgames.com.<br>Připravenost na AI vyhledávání (Google AI Overviews, ChatGPT, Perplexity).</p>
+  <div class="meta">
+    <span><strong>Web:</strong> shop.czechgames.com</span>
+    <span><strong>Platforma:</strong> Shoptet Premium</span>
+    <span><strong>Datum:</strong> 25. 3. 2026</span>
+    <span><strong>Jazyk:</strong> EN</span>
+  </div>
+</section>
+
+<!-- SCORE BREAKDOWN -->
+<section id="score">
+  <div class="narrow">
+    <span class="sec-num reveal">01 /</span>
+    <h2 class="reveal d1">Skóre podle kritérií</h2>
+
+    <div class="stat-grid reveal d2">
+      <div class="stat-card">
+        <div class="num red">4<span style="font-size:1.2rem">/25</span></div>
+        <div class="bar-wrap"><div class="bar" style="width:16%"></div></div>
+        <div class="lbl">Citability</div>
+      </div>
+      <div class="stat-card">
+        <div class="num gold">6<span style="font-size:1.2rem">/20</span></div>
+        <div class="bar-wrap"><div class="bar gold" style="width:30%"></div></div>
+        <div class="lbl">Struktura</div>
+      </div>
+      <div class="stat-card">
+        <div class="num green">5<span style="font-size:1.2rem">/15</span></div>
+        <div class="bar-wrap"><div class="bar green" style="width:33%"></div></div>
+        <div class="lbl">Multi-modal</div>
+      </div>
+      <div class="stat-card">
+        <div class="num blue">8<span style="font-size:1.2rem">/20</span></div>
+        <div class="bar-wrap"><div class="bar blue" style="width:40%"></div></div>
+        <div class="lbl">Autorita</div>
+      </div>
+    </div>
+
+    <div class="stat-grid reveal d3" style="grid-template-columns:1fr">
+      <div class="stat-card" style="display:flex;align-items:center;justify-content:center;gap:32px">
+        <div>
+          <div class="num purple">5<span style="font-size:1.2rem">/20</span></div>
+          <div class="lbl">Technická dostupnost</div>
+        </div>
+        <div class="bar-wrap" style="flex:1;max-width:400px"><div class="bar purple" style="width:25%"></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PLATFORM BREAKDOWN -->
+<section id="platforms">
+  <div class="narrow">
+    <span class="sec-num reveal">02 /</span>
+    <h2 class="reveal d1">Skóre podle platforem</h2>
+    <div class="platform-grid reveal d2">
+      <div class="plat-card">
+        <h3>Google AI Overviews</h3>
+        <div class="plat-score red">25<span style="font-size:1rem;color:var(--cream2)">/100</span></div>
+        <p class="plat-note">Slabý on-page obsah, chybí schema, thin meta descriptions</p>
+      </div>
+      <div class="plat-card">
+        <h3>ChatGPT</h3>
+        <div class="plat-score" style="color:var(--gold)">35<span style="font-size:1rem;color:var(--cream2)">/100</span></div>
+        <p class="plat-note">Wikipedia hry silné, ale firemní stránka je stub; shop nemá citovatelný obsah</p>
+      </div>
+      <div class="plat-card">
+        <h3>Perplexity</h3>
+        <div class="plat-score" style="color:var(--gold)">30<span style="font-size:1rem;color:var(--cream2)">/100</span></div>
+        <p class="plat-note">Silná přítomnost na Redditu přes herní tituly, ale shop sám o sobě necitovatelný</p>
+      </div>
+      <div class="plat-card">
+        <h3>Bing Copilot</h3>
+        <div class="plat-score red">25<span style="font-size:1rem;color:var(--cream2)">/100</span></div>
+        <p class="plat-note">Slabé structured data, chybí Product JSON-LD</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AI CRAWLER ACCESS -->
+<section id="crawlers">
+  <div class="narrow">
+    <span class="sec-num reveal">03 /</span>
+    <h2 class="reveal d1">AI Crawler Access</h2>
+
+    <div class="two reveal d2">
+      <div>
+        <h3>robots.txt</h3>
+        <p>Všichni AI crawleři mají <strong style="color:var(--cream)">plný přístup</strong> k veřejným stránkám. Žádné specifické blokování AI botů.</p>
+        <br>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>Crawler</th><th>Vlastník</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr><td>GPTBot</td><td>OpenAI</td><td><span class="badge ok">Povolen</span></td></tr>
+              <tr><td>OAI-SearchBot</td><td>OpenAI</td><td><span class="badge ok">Povolen</span></td></tr>
+              <tr><td>ChatGPT-User</td><td>OpenAI</td><td><span class="badge ok">Povolen</span></td></tr>
+              <tr><td>ClaudeBot</td><td>Anthropic</td><td><span class="badge ok">Povolen</span></td></tr>
+              <tr><td>PerplexityBot</td><td>Perplexity</td><td><span class="badge ok">Povolen</span></td></tr>
+              <tr><td>CCBot</td><td>Common Crawl</td><td><span class="badge warn">Zvážit blokaci</span></td></tr>
+              <tr><td>Bytespider</td><td>ByteDance</td><td><span class="badge warn">Zvážit blokaci</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div>
+        <h3>llms.txt</h3>
+        <div class="card" style="border-color:rgba(233,55,69,.25)">
+          <span class="badge bad" style="margin-bottom:12px">Chybí</span>
+          <p>Soubor <code style="color:var(--cream)">/llms.txt</code> vrací 404. Web nemá žádnou strukturovanou navigaci pro LLM modely.</p>
+          <br>
+          <h3 style="color:var(--green);font-size:.8rem">Doporučení</h3>
+          <p>Vytvořit llms.txt s přehledem webu, klíčovými stránkami, fakty o CGE a kontaktem. Viz sekce s doporučeními níže.</p>
+        </div>
+        <br>
+        <h3>SSR Status</h3>
+        <div class="card">
+          <span class="badge ok" style="margin-bottom:12px">Server-Side Rendered</span>
+          <p>Obsah je renderovaný na serveru (Shoptet). AI crawleři nemusí spouštět JavaScript.</p>
+          <br>
+          <span class="badge warn" style="margin-bottom:8px">Ale pozor</span>
+          <p style="font-size:.85rem">H1 skrytý CSS (<code>display:none</code>). Ceny inicálně skryté JS.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BRAND MENTIONS -->
+<section id="brand">
+  <div class="narrow">
+    <span class="sec-num reveal">04 /</span>
+    <h2 class="reveal d1">Brand Mentions</h2>
+    <p class="subtitle reveal d2">Brand mentions korelují 3x silněji s AI viditelností než zpětné odkazy. CGE má silnou off-site přítomnost, kterou e-shop nevyužívá.</p>
+
+    <div class="brand-grid reveal d3">
+      <div class="brand-item">
+        <div class="brand-name">BoardGameGeek</div>
+        <div class="brand-str"><span class="badge strong">Velmi silná</span></div>
+        <div class="brand-detail">40+ her, Through the Ages v top 15 all-time, Codenames #127</div>
+      </div>
+      <div class="brand-item">
+        <div class="brand-name">Wikipedia (hry)</div>
+        <div class="brand-str"><span class="badge strong">Silná</span></div>
+        <div class="brand-detail">Codenames: 1,866 slov, 23 ref. Through the Ages: 15 ref</div>
+      </div>
+      <div class="brand-item">
+        <div class="brand-name">Wikipedia (firma)</div>
+        <div class="brand-str"><span class="badge weak">Slabá</span></div>
+        <div class="brand-detail">Stub ~145 slov, 5 citací. Kritická slabina pro ChatGPT</div>
+      </div>
+      <div class="brand-item">
+        <div class="brand-name">YouTube (3rd party)</div>
+        <div class="brand-str"><span class="badge strong">Velmi silná</span></div>
+        <div class="brand-detail">Shut Up & Sit Down, Dice Tower, stovky recenzí</div>
+      </div>
+      <div class="brand-item">
+        <div class="brand-name">YouTube (vlastní)</div>
+        <div class="brand-str"><span class="badge mid">Střední</span></div>
+        <div class="brand-detail">@CzechGames, dokumentární série (8 epizod)</div>
+      </div>
+      <div class="brand-item">
+        <div class="brand-name">Reddit</div>
+        <div class="brand-str"><span class="badge strong">Silná</span></div>
+        <div class="brand-detail">r/boardgames (5M+ členů), časté diskuze o CGE hrách</div>
+      </div>
+      <div class="brand-item">
+        <div class="brand-name">Instagram</div>
+        <div class="brand-str"><span class="badge mid">Střední</span></div>
+        <div class="brand-detail">@czech_games_edition ~25,000 followerů</div>
+      </div>
+      <div class="brand-item">
+        <div class="brand-name">Facebook</div>
+        <div class="brand-str"><span class="badge mid">Střední</span></div>
+        <div class="brand-detail">/CzechGames ~19,000 followerů</div>
+      </div>
+      <div class="brand-item">
+        <div class="brand-name">LinkedIn</div>
+        <div class="brand-str"><span class="badge weak">Slabá</span></div>
+        <div class="brand-detail">~546 followerů, nízká B2B viditelnost</div>
+      </div>
+      <div class="brand-item">
+        <div class="brand-name">Amazon</div>
+        <div class="brand-str"><span class="badge mid">Přítomna</span></div>
+        <div class="brand-detail">Dedikovaná brand store stránka</div>
+      </div>
+    </div>
+
+    <div class="card reveal d4" style="margin-top:24px;border-color:rgba(233,55,69,.2);background:rgba(233,55,69,.04)">
+      <h3 style="color:var(--red)">Paradox</h3>
+      <p>CGE má jedny z nejúspěšnějších deskových her na světě <strong style="color:var(--cream)">(Codenames: 16M+ kopií, Spiel des Jahres 2016)</strong>, ale e-shop tuto autoritu vůbec nevyužívá. Žádné zmínky o ocenění, žádná fakta, žádný citovatelný obsah.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CITABILITY -->
+<section id="citability">
+  <div class="narrow">
+    <span class="sec-num reveal">05 /</span>
+    <h2 class="reveal d1">Passage-Level Citability</h2>
+    <p class="subtitle reveal d2">Optimální délka citovatelného bloku pro AI je 134-167 slov. Na celém webu neexistuje ani jeden takový blok.</p>
+
+    <h3 class="reveal d2">Produktové stránky</h3>
+    <div class="tbl-wrap reveal d3">
+      <table>
+        <thead><tr><th>Stránka</th><th>Délka popisu</th><th>Citovatelnost</th><th>Chybí</th></tr></thead>
+        <tbody>
+          <tr><td style="color:var(--cream);font-weight:500">Codenames</td><td>~100 slov</td><td><span class="badge bad">Nízká</span></td><td>Spiel des Jahres, designer, hráči, doba hry</td></tr>
+          <tr><td style="color:var(--cream);font-weight:500">Lost Ruins of Arnak</td><td>~150 slov</td><td><span class="badge mid">Střední</span></td><td>Designer, ocenění, BGG rating</td></tr>
+          <tr><td style="color:var(--cream);font-weight:500">SETI</td><td>~90 slov</td><td><span class="badge bad">Nízká</span></td><td>Příliš krátké, chybí fakta</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="reveal d3">Strukturální problémy</h3>
+    <div class="tbl-wrap reveal d4">
+      <table>
+        <thead><tr><th>Problém</th><th>Dopad na GEO</th></tr></thead>
+        <tbody>
+          <tr><td>H1 skrytý CSS (<code>display:none</code>)</td><td><span class="badge bad">Kritický</span> &mdash; AI crawleři mohou ignorovat</td></tr>
+          <tr><td>Headings jako <code>&lt;div class="h4"&gt;</code></td><td><span class="badge bad">Kritický</span> &mdash; nejsou sémantické</td></tr>
+          <tr><td>Žádná About stránka</td><td><span class="badge bad">Kritický</span> &mdash; AI nemá zdroj o firmě</td></tr>
+          <tr><td>Žádný blog/content</td><td><span class="badge bad">Kritický</span> &mdash; nulový editorial obsah</td></tr>
+          <tr><td>FAQ bez schema</td><td><span class="badge warn">Vysoký</span> &mdash; žádné FAQPage rich results</td></tr>
+          <tr><td>Žádné hreflang tagy</td><td><span class="badge warn">Střední</span> &mdash; EU vs US shop nepropojeny</td></tr>
+          <tr><td>Meta descriptions duplicitní</td><td><span class="badge warn">Střední</span> &mdash; "Welcome to CGE store" 2x</td></tr>
+          <tr><td>Žádné publication dates</td><td><span class="badge mid">Střední</span> &mdash; čerstvost neověřitelná</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- SCHEMA MARKUP -->
+<section id="schema">
+  <div class="narrow">
+    <span class="sec-num reveal">06 /</span>
+    <h2 class="reveal d1">Schema Markup</h2>
+
+    <div class="two gap-sm reveal d2">
+      <div>
+        <h3 style="color:var(--green)">Přítomné</h3>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>Typ</th><th>Formát</th><th>Kvalita</th></tr></thead>
+            <tbody>
+              <tr><td>Organization</td><td>JSON-LD</td><td><span class="badge mid">Základní</span> &mdash; bug: <code>employee:""</code></td></tr>
+              <tr><td>WebSite + Search</td><td>Microdata</td><td><span class="badge ok">OK</span></td></tr>
+              <tr><td>Product + Offer</td><td>Microdata</td><td><span class="badge mid">Částečné</span> &mdash; chybí brand, rating</td></tr>
+              <tr><td>BreadcrumbList</td><td>Microdata</td><td><span class="badge ok">OK</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div>
+        <h3 style="color:var(--red)">Chybějící (kritické)</h3>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>Typ</th><th>Kde</th></tr></thead>
+            <tbody>
+              <tr><td style="color:var(--cream)">FAQPage</td><td>Homepage FAQ sekce</td></tr>
+              <tr><td style="color:var(--cream)">Product JSON-LD</td><td>Produktové stránky</td></tr>
+              <tr><td style="color:var(--cream)">brand v Product</td><td>Produktové stránky</td></tr>
+              <tr><td style="color:var(--cream)">aggregateRating</td><td>Produktové stránky</td></tr>
+              <tr><td style="color:var(--cream)">Person (designer)</td><td>Produktové stránky</td></tr>
+              <tr><td style="color:var(--cream)">Store / LocalBusiness</td><td>Kontaktní stránky</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TOP 5 CHANGES -->
+<section id="top5">
+  <div class="narrow">
+    <span class="sec-num reveal">07 /</span>
+    <h2 class="reveal d1">Top 5 změn<br>s nejvyšším dopadem</h2>
+
+    <div class="impact-grid reveal d2">
+      <div class="impact-card featured">
+        <span class="impact-tag">#1 / Kritické</span>
+        <h3>Vytvořit About stránku s citovatelným obsahem</h3>
+        <p>Vytvořit /about/ stránku s 500-800 slovy o Czech Games Edition. Zahrnout: založení (2007, Praha), klíčové hry, Spiel des Jahres 2016, 16M+ Codenames, vlastní výrobní závod (2024). Strukturovat do 134-167 slovních bloků s question-based headings. Přidat Organization a Person schema.</p>
+        <div class="impact-score">+15-20 bodů GEO skóre</div>
+      </div>
+      <div class="impact-card">
+        <span class="impact-tag">#2 /</span>
+        <h3>FAQPage schema + rozšířit FAQ</h3>
+        <p>Přidat FAQPage JSON-LD schema. Rozšířit odpovědi na 134-167 slov. Vytvořit dedikovanou /faq/ stránku. Přidat AI-relevantní otázky.</p>
+        <div class="impact-score">+8-10 bodů GEO skóre</div>
+      </div>
+      <div class="impact-card">
+        <span class="impact-tag">#3 /</span>
+        <h3>Obohatit produktové stránky</h3>
+        <p>Ke každé hře přidat: designer, hráči, doba hry, ocenění, BGG rating. Přidat "What is [Game]?" bloky. Implementovat Product JSON-LD.</p>
+        <div class="impact-score">+8-12 bodů GEO skóre</div>
+      </div>
+      <div class="impact-card">
+        <span class="impact-tag">#4 /</span>
+        <h3>Vytvořit llms.txt + opravit meta tagy</h3>
+        <p>Vytvořit /llms.txt s přehledem webu. Přepsat homepage title a description. Napsat unikátní descriptions pro kategorie.</p>
+        <div class="impact-score">+5-8 bodů GEO skóre</div>
+      </div>
+      <div class="impact-card">
+        <span class="impact-tag">#5 / Off-site</span>
+        <h3>Rozšířit Wikipedia firemní stránku</h3>
+        <p>Stub ~145 slov rozšířit na 800-1,200 slov s 15-20 citacemi. Přidat: History, Notable Games, Awards, Manufacturing. Wikipedia = 47.9% ChatGPT zdrojů.</p>
+        <div class="impact-score">Nejvyšší dopad na ChatGPT a Perplexity</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ACTION PLAN -->
+<section id="plan">
+  <div class="narrow">
+    <span class="sec-num reveal">08 /</span>
+    <h2 class="reveal d1">Akční plán</h2>
+
+    <span class="phase-label reveal">Quick Wins / 1-2 týdny</span>
+    <div class="action-list reveal d1">
+      <div class="action-item"><div class="action-num">1</div><div class="action-text">Přepsat homepage H1 na viditelný, keyword-rich nadpis</div><div class="action-impact"><span class="badge mid">Střední</span></div></div>
+      <div class="action-item"><div class="action-num">2</div><div class="action-text">Přepsat meta title a description homepage</div><div class="action-impact"><span class="badge mid">Střední</span></div></div>
+      <div class="action-item"><div class="action-num">3</div><div class="action-text">Přidat "Czech Games Edition is..." definici (134-167 slov)</div><div class="action-impact"><span class="badge strong">Vysoký</span></div></div>
+      <div class="action-item"><div class="action-num">4</div><div class="action-text">Opravit title tagy produktů (dvojité mezery)</div><div class="action-impact"><span class="badge ok">Nízký</span></div></div>
+      <div class="action-item"><div class="action-num">5</div><div class="action-text">Přidat publication/update dates na stránky</div><div class="action-impact"><span class="badge ok">Nízký</span></div></div>
+      <div class="action-item"><div class="action-num">6</div><div class="action-text">Opravit Organization schema (smazat prázdný employee)</div><div class="action-impact"><span class="badge mid">Střední</span></div></div>
+      <div class="action-item"><div class="action-num">7</div><div class="action-text">Přidat Twitter Card meta tagy</div><div class="action-impact"><span class="badge ok">Nízký</span></div></div>
+    </div>
+
+    <span class="phase-label reveal">Medium Effort / 2-4 týdny</span>
+    <div class="action-list reveal d1">
+      <div class="action-item"><div class="action-num">8</div><div class="action-text">Vytvořit /llms.txt</div><div class="action-impact"><span class="badge mid">Střední</span></div></div>
+      <div class="action-item"><div class="action-num">9</div><div class="action-text">Implementovat FAQPage schema</div><div class="action-impact"><span class="badge strong">Vysoký</span></div></div>
+      <div class="action-item"><div class="action-num">10</div><div class="action-text">Vytvořit dedikovanou About stránku (500-800 slov)</div><div class="action-impact"><span class="badge bad">Velmi vysoký</span></div></div>
+      <div class="action-item"><div class="action-num">11</div><div class="action-text">Rozšířit produktové popisy o fakta a ocenění</div><div class="action-impact"><span class="badge strong">Vysoký</span></div></div>
+      <div class="action-item"><div class="action-num">12</div><div class="action-text">Přidat Product JSON-LD ke všem produktům</div><div class="action-impact"><span class="badge strong">Vysoký</span></div></div>
+      <div class="action-item"><div class="action-num">13</div><div class="action-text">Napsat unikátní descriptions pro kategorie</div><div class="action-impact"><span class="badge mid">Střední</span></div></div>
+      <div class="action-item"><div class="action-num">14</div><div class="action-text">Přidat Person schema pro designéry her</div><div class="action-impact"><span class="badge mid">Střední</span></div></div>
+      <div class="action-item"><div class="action-num">15</div><div class="action-text">Vytvořit dedikovanou FAQ stránku s rozšířenými odpověďmi</div><div class="action-impact"><span class="badge strong">Vysoký</span></div></div>
+    </div>
+
+    <span class="phase-label reveal">High Impact / 1-3 měsíce</span>
+    <div class="action-list reveal d1">
+      <div class="action-item"><div class="action-num">16</div><div class="action-text">Rozšířit Wikipedia firemní stránku (800-1200 slov)</div><div class="action-impact"><span class="badge bad">Velmi vysoký</span></div></div>
+      <div class="action-item"><div class="action-num">17</div><div class="action-text">Spustit content/blog sekci s herními průvodci</div><div class="action-impact"><span class="badge strong">Vysoký</span></div></div>
+      <div class="action-item"><div class="action-num">18</div><div class="action-text">Vybudovat YouTube obsah s brand mentions</div><div class="action-impact"><span class="badge strong">Vysoký</span></div></div>
+      <div class="action-item"><div class="action-num">19</div><div class="action-text">Implementovat hreflang tagy (EU vs US store)</div><div class="action-impact"><span class="badge mid">Střední</span></div></div>
+      <div class="action-item"><div class="action-num">20</div><div class="action-text">Vytvořit unique research content (statistiky, průzkumy)</div><div class="action-impact"><span class="badge bad">Velmi vysoký</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTENT EXAMPLES -->
+<section id="examples">
+  <div class="narrow">
+    <span class="sec-num reveal">09 /</span>
+    <h2 class="reveal d1">Příklady<br>nového obsahu</h2>
+    <p class="subtitle reveal d2">Konkrétní ukázky citovatelných bloků optimalizovaných pro AI vyhledávání.</p>
+
+    <div class="steps reveal d3">
+      <div class="sc">
+        <div class="sc-num">Homepage intro blok</div>
+        <h3>Nový H1 + úvodní odstavec (148 slov)</h3>
+        <div class="code-block">
+<span class="tag">&lt;h1&gt;</span>Czech Games Edition Official Store<span class="tag">&lt;/h1&gt;</span>
+<span class="tag">&lt;p&gt;</span>Czech Games Edition (CGE) is a Prague-based board game
+publisher founded in 2007, known for award-winning titles
+like Codenames — the Spiel des Jahres 2016 winner with over
+16 million copies sold in 46+ languages. Our catalog includes
+critically acclaimed strategy games such as Through the Ages
+(BGG Top 15 all-time), Lost Ruins of Arnak (Deutscher
+Spielepreis 2021), and Galaxy Trucker. All games in this store
+are in English. We manufacture most of our games and components
+in the Czech Republic at our own production facility.<span class="tag">&lt;/p&gt;</span>
+        </div>
+      </div>
+      <div class="sc">
+        <div class="sc-num">Codenames produktová stránka</div>
+        <h3>Rozšířený popis s definičním vzorem (134 slov)</h3>
+        <div class="code-block">
+<span class="tag">&lt;h2&gt;</span>What is Codenames?<span class="tag">&lt;/h2&gt;</span>
+<span class="tag">&lt;p&gt;</span>Codenames is an award-winning social word game designed by
+Vlaada Chvátil and published by Czech Games Edition in 2015.
+It won the prestigious Spiel des Jahres award in 2016 and has
+sold over 16 million copies worldwide. The game supports 4-8+
+players in two competing teams, with an average play time of
+15-20 minutes. Players give one-word clues to help their
+teammates identify secret agents from a grid of 25 words,
+while avoiding the assassin. Codenames is available in 46+
+languages and has spawned multiple editions including
+Codenames: Duet, Codenames: Pictures, and Codenames:
+Disney Family Edition.<span class="tag">&lt;/p&gt;</span>
+        </div>
+      </div>
+      <div class="sc">
+        <div class="sc-num">Navrhovaný llms.txt</div>
+        <h3>Strukturovaný soubor pro LLM crawlery</h3>
+        <div class="code-block">
+<span class="key"># Czech Games Edition Store</span>
+<span class="str">&gt; Official online store of Czech Games Edition (CGE),
+&gt; a Prague-based board game publisher. Founded in 2007.
+&gt; Known for Codenames (16M+ copies, Spiel des Jahres 2016).</span>
+
+<span class="key">## Key Pages</span>
+- [All Products](https://shop.czechgames.com/all-products/)
+- [Base Games](https://shop.czechgames.com/games/)
+- [Codenames](https://shop.czechgames.com/codenames/)
+
+<span class="key">## Company</span>
+- Founded: 2007, Prague, Czech Republic
+- Notable designer: Vlaada Chvátil
+- Awards: Spiel des Jahres 2016, Deutscher Spielepreis 2021
+- Own manufacturing facility (acquired 2024)
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONCLUSION -->
+<section id="conclusion">
+  <div class="narrow" style="text-align:center">
+    <span class="sec-num reveal">10 /</span>
+    <h2 class="reveal d1">Závěr</h2>
+    <div class="card reveal d2" style="max-width:800px;margin:0 auto;text-align:left;border-color:rgba(233,55,69,.2);background:linear-gradient(135deg,rgba(233,55,69,.06),transparent)">
+      <p style="font-size:1.05rem;line-height:1.85;margin-bottom:16px">Shop.czechgames.com má <strong style="color:var(--cream)">paradoxní pozici</strong>: Czech Games Edition je globálně uznávaný vydavatel s extrémně silnou brand awareness v herní komunitě, ale jejich e-shop tuto autoritu prakticky vůbec nevyužívá pro AI search viditelnost.</p>
+      <p style="font-size:1.05rem;line-height:1.85;margin-bottom:24px">Web je funkční e-shop s čistou strukturou a SSR, ale z pohledu GEO je téměř "prázdný" — chybí textový obsah, schema markup je minimální, meta tagy jsou generické, a neexistuje žádný editorial/content layer.</p>
+      <div style="display:flex;gap:24px;flex-wrap:wrap">
+        <div style="flex:1;min-width:200px;padding:20px;background:var(--bg);border-radius:8px;border-left:3px solid var(--green)">
+          <div style="font-family:var(--fh);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--green);margin-bottom:6px">Příležitost</div>
+          <p style="font-size:.88rem;line-height:1.6">Skóre může vzrůst z <strong style="color:var(--cream)">28 na 55-65 bodů</strong> během 4-6 týdnů implementací on-site změn.</p>
+        </div>
+        <div style="flex:1;min-width:200px;padding:20px;background:var(--bg);border-radius:8px;border-left:3px solid var(--red)">
+          <div style="font-family:var(--fh);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--red);margin-bottom:6px">Riziko</div>
+          <p style="font-size:.88rem;line-height:1.6">Wikipedia stub = <strong style="color:var(--cream)">47.9% ChatGPT</strong> zdrojů nedostupných pro citaci CGE jako firmy.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <h2 class="reveal">Další krok?</h2>
+  <p class="reveal d1">Kompletní GEO analýza připravena. Pojďme posunout viditelnost CGE v AI vyhledávání.</p>
+  <a href="https://czechgames.vercel.app/" class="cta reveal d2">&larr; Zpět na nabídku</a>
+  <div class="footer-note">GEO Report &mdash; shop.czechgames.com &mdash; 25. března 2026 &mdash; Magexo</div>
+</footer>
+
+<script>
+// Progress bar
+window.addEventListener('scroll',()=>{
+  const h=document.documentElement.scrollHeight-window.innerHeight;
+  const p=(window.scrollY/h)*100;
+  document.getElementById('progress').style.width=p+'%';
+});
+
+// Scroll reveal
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}});
+},{threshold:.15});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+// Sidebar toggle
+const sidebar=document.getElementById('sidebar');
+const toggle=document.getElementById('sidebarToggle');
+toggle.addEventListener('click',()=>sidebar.classList.toggle('open'));
+
+// Sidebar active state on scroll
+const sidebarLinks=document.querySelectorAll('.sidebar-links a');
+const sectionIds=Array.from(sidebarLinks).map(a=>a.getAttribute('href').slice(1));
+const sections=sectionIds.map(id=>document.getElementById(id)).filter(Boolean);
+
+function updateActive(){
+  let current='';
+  const scrollY=window.scrollY+window.innerHeight/3;
+  sections.forEach(s=>{
+    if(s.offsetTop<=scrollY) current=s.id;
+  });
+  sidebarLinks.forEach(a=>{
+    const href=a.getAttribute('href').slice(1);
+    a.classList.toggle('active',href===current);
+  });
+}
+window.addEventListener('scroll',updateActive,{passive:true});
+updateActive();
+
+// Close sidebar on link click (mobile)
+sidebarLinks.forEach(a=>a.addEventListener('click',()=>{
+  if(window.innerWidth<=900) sidebar.classList.remove('open');
+}));
+</script>
+</body>
+</html>
