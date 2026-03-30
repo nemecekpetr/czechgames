@@ -305,6 +305,17 @@ body.lang-cs .en{display:none!important}
 </style>
 </head>
 <body>
+<div id="pw-gate" style="position:fixed;inset:0;z-index:9999;background:var(--bg);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:24px">
+<div style="font-family:var(--fh);font-size:2rem;font-weight:700;text-transform:uppercase;color:var(--cream);letter-spacing:.05em">Enter Password</div>
+<input id="pw-input" type="password" placeholder="Password" autofocus style="font-family:var(--fb);font-size:1rem;padding:14px 24px;border-radius:8px;border:1px solid rgba(255,255,255,.15);background:var(--bg2);color:var(--cream);outline:none;width:280px;text-align:center" onkeydown="if(event.key==='Enter')checkPw()">
+<button onclick="checkPw()" style="font-family:var(--fh);font-size:.85rem;letter-spacing:.15em;text-transform:uppercase;font-weight:700;background:var(--red);color:#fff;padding:14px 36px;border:none;border-radius:8px;cursor:pointer">Enter</button>
+<div id="pw-err" style="font-family:var(--fb);font-size:.85rem;color:var(--red);opacity:0;transition:opacity .3s">Wrong password</div>
+</div>
+<script>
+function checkPw(){var p=document.getElementById('pw-input').value;if(p==='magexo'){document.getElementById('pw-gate').style.display='none';document.body.style.overflow=''}else{document.getElementById('pw-err').style.opacity='1';document.getElementById('pw-input').value='';setTimeout(function(){document.getElementById('pw-err').style.opacity='0'},2000)}}
+document.body.style.overflow='hidden';
+</script>
+
 <div id="progress"></div>
 <nav><a class="nav-logo" href="#hero">MAG<span>EXO</span></a><span class="nav-slide-hint" id="nav-section"></span><div class="lang-toggle"><button class="lang-btn active" onclick="setLang('en')" id="btn-en">🇬🇧</button><button class="lang-btn" onclick="setLang('cs')" id="btn-cs">🇨🇿</button></div></nav>
 
